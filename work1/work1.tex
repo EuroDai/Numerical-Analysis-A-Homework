@@ -37,13 +37,28 @@ proofname = \heiti{证明}
   \item 已知$4$个四位有效数字的三角函数的值$\sin 1^\circ =0.0175$, $\sin 2^\circ =0.0349$, $\cos 1 ^ \circ = 0.9998$, $\cos 2 ^\circ = 0.9994$.用以下四种方法计算$1 - \cos 2 ^ \circ$的值，比较结果的误差，并说明各有多少位有效数字.
   \begin{enumerate}[label=（\arabic*）]
     \item 直接用已知数字计算；
+    \begin{solution}
+      \begin{align*}
+        &x_A=1 - \cos 2^\circ = 1 - 0.9994 = 10^{-3}\times0.6\\
+        &\left |  x-x_A\right | \le 0.5\times10^{-4}\\
+        &n=-3-(-4)=1
+      \end{align*}
+      有效数字为$1$位.
+    \end{solution}
     \item 用公式$1-\cos 2x = 2 \sin^2 x$及已知数据；
+    \begin{solution}
+      
+    \end{solution}
     \item 用公式$1-\cos x = \frac{\sin^2 x}{1+\cos x}$及已知数据；
+    \begin{solution}
+      
+    \end{solution} 
     \item 用$1-\cos x$的Taylor（泰勒）展开式，要计算结果有四位有效数字（$1-\cos 2^\circ =6.0917298\cdots \times 10^{-4}$）
+    \begin{solution}
+      
+    \end{solution}
   \end{enumerate}
-  \begin{solution}
-
-  \end{solution}
+  
 
   % 题目3
   \item 下面是两种利用$9$次Taylor多项式近似计算$e^{-5}$的方法，试分析哪种方法能提供较好的近似值.
