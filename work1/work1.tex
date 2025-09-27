@@ -1,0 +1,79 @@
+% Homework template for Inference and Information
+% UPDATE: September 26, 2017 by Xiangxiang
+\documentclass[a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{ctex}
+\ctexset{
+proofname = \heiti{证明}
+}
+\usepackage{amsmath, amssymb, amsthm}
+% amsmath: equation*, amssymb: mathbb, amsthm: proof
+\usepackage{moreenum}
+\usepackage{mathtools}
+\usepackage{url}
+\usepackage{bm}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{booktabs} % toprule
+\usepackage[mathcal]{eucal}
+\usepackage[thehwcnt = 1]{iidef} % 作业编号
+\everymath{\displaystyle}
+
+
+\thecourseinstitute{清华大学机械工程系}
+\thecoursename{数值分析A}
+\theterm{2025年秋季学期}
+\hwname{作业}
+\slname{\heiti{解}}
+\begin{document}
+\courseheader
+\name{代卓远2025210205}
+
+\begin{enumerate}
+  \setlength{\itemsep}{3\parskip}
+
+  % 题目2
+  \item 已知$4$个四位有效数字的三角函数的值$\sin 1^\circ =0.0175$, $\sin 2^\circ =0.0349$, $\cos 1 ^ \circ = 0.9998$, $\cos 2 ^\circ = 0.9994$.用以下四种方法计算$1 - \cos 2 ^ \circ$的值，比较结果的误差，并说明各有多少位有效数字.
+  \begin{enumerate}[label=（\arabic*）]
+    \item 直接用已知数字计算；
+    \item 用公式$1-\cos 2x = 2 \sin^2 x$及已知数据；
+    \item 用公式$1-\cos x = \frac{\sin^2 x}{1+\cos x}$及已知数据；
+    \item 用$1-\cos x$的Taylor（泰勒）展开式，要计算结果有四位有效数字（$1-\cos 2^\circ =6.0917298\cdots \times 10^{-4}$）
+  \end{enumerate}
+  \begin{solution}
+
+  \end{solution}
+
+  % 题目3
+  \item 下面是两种利用$9$次Taylor多项式近似计算$e^{-5}$的方法，试分析哪种方法能提供较好的近似值.
+  \begin{enumerate}[label=（\arabic*）]
+    \item $\mathrm{e}^{-5}\approx\sum_{i=0}^9\left(-1\right)^i\frac{5^i}{i!}$
+    \item $\mathrm{e}^{-5}\approx\left(\sum_{i=0}^9\frac{5^i}{i!}\right)^{-1}$
+  \end{enumerate}
+
+  % 题目5
+  \item 下列公式要怎样变换才能使数值计算时能避免有效数字的损失？
+  \begin{enumerate}[label=（\arabic*）]
+    \item $\int_N^{N+1}\frac{1}{1+x^2}\mathrm{d}x=\arctan(N+1)-\arctan N$，$N>>1$;
+    \item $\sqrt{x^2+\frac{1}{x}}-\sqrt{x^2-\frac{1}{x}}$，$|x|>>1$;
+    \item $\ln(x+1)-\ln x$，$x>>1$;
+    \item $\cos^2x-\sin^2x$，$x\approx\frac{\pi}{4}$
+  \end{enumerate}
+
+  % 题目7
+  \item 已知$I_n=\int_0^1x^n\mathrm{e}^{x-1}\mathrm{d}x,n=0,1,\cdots$,满足$I_0=1-\mathrm{e}^{-1},I_n=1-nI_{n-1},n=1,2,\cdots$.
+  \begin{enumerate}[label=（\arabic*）]
+    \item 取$I_0$近似值$\tilde{I}_{0}=1-0.3679$，用递推公式$\tilde{I}_{n}=1-n\tilde{I}_{n-1}$计算$I_n$的近似值$\tilde{I}_n,n=1,2,\cdots ,9$(用四位有效数字计算),结果是否准确？
+    \item 设$\varepsilon_n=I_n-\bar{I}_n$，推导$\mid\varepsilon_n\mid$与$\mid\varepsilon_0\mid$的关系.
+  \end{enumerate}
+
+\end{enumerate}
+\end{document}
+\begin{equation}
+\end{equation}
+
+%%% Local Variables:
+%%% mode: late\rvx
+%%% TeX-master: t
+%%% End:
