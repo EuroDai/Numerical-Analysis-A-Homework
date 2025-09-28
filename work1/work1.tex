@@ -36,26 +36,60 @@ proofname = \heiti{证明}
   % 题目2
   \item 已知$4$个四位有效数字的三角函数的值$\sin 1^\circ =0.0175$, $\sin 2^\circ =0.0349$, $\cos 1 ^ \circ = 0.9998$, $\cos 2 ^\circ = 0.9994$.用以下四种方法计算$1 - \cos 2 ^ \circ$的值，比较结果的误差，并说明各有多少位有效数字.
   \begin{enumerate}[label=（\arabic*）]
+    % (1)
     \item 直接用已知数字计算；
     \begin{solution}
+      直接计算
       \begin{align*}
-        &x_A=1 - \cos 2^\circ = 1 - 0.9994 = 10^{-3}\times0.6\\
+        &x_A=1 - \cos 2^\circ = 1 - 0.9994 = 10^{-3}\times0.6
+        \end{align*}
+      误差
+        \begin{align*}
         &\left |  x-x_A\right | \le 0.5\times10^{-4}\\
         &n=-3-(-4)=1
       \end{align*}
       有效数字为$1$位.
     \end{solution}
+    % (2)
     \item 用公式$1-\cos 2x = 2 \sin^2 x$及已知数据；
     \begin{solution}
-      
+      \begin{align*}
+        &x_A=1 - \cos 2^\circ = 2\sin^2 1^\circ = 2\times 0.0175^2 =10^{-3}\times0.6125
+      \end{align*}
+      误差
+        \begin{align*}
+        &\left |  x-x_A\right | \le 0.5\times10^{-5}\\
+        &n=-3-(-5)=2
+      \end{align*}
+      有效数字为$2$位.
     \end{solution}
+    % (3)
     \item 用公式$1-\cos x = \frac{\sin^2 x}{1+\cos x}$及已知数据；
     \begin{solution}
-      
+      \begin{align*}
+        &x_A=1 - \cos 2^\circ = \frac{\sin^2 2^\circ}{1+\cos 2^\circ} = \frac{0.0349^2}{1+0.9994}\approx 10^{-3}\times0.60918
+      \end{align*}
+      误差
+      \begin{align*}
+        &\left |  x-x_A\right | \le 0.5\times10^{-7}\\
+        &n=-3-(-7)=4
+      \end{align*}
+      有效数字为$4$位.
     \end{solution} 
+    % (4)
     \item 用$1-\cos x$的Taylor（泰勒）展开式，要计算结果有四位有效数字（$1-\cos 2^\circ =6.0917298\cdots \times 10^{-4}$）
     \begin{solution}
-      
+      \begin{align*}
+        x_A=1 - \cos 2^\circ &= \sum_{i=1}^n (-1)^{i-1}\frac{(2^\circ)^{2i}}{(2i)!}\\
+        &\approx \frac{(2\times\frac{\pi}{180})^2}{2!}-\frac{(2\times\frac{\pi}{180})^4}{4!}\\
+        &\approx 10^{-3}\times0.60917298
+      \end{align*}
+      误差
+      \begin{align*}
+        &\left |  x-x_A\right | \le 0.5\times10^{-7}\\
+        &n>-3-(-7)=4
+      \end{align*}
+      有效数字$>4$位.
     \end{solution}
   \end{enumerate}
   
