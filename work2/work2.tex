@@ -17,7 +17,7 @@ proofname = \heiti{证明}
 \usepackage{subcaption}
 \usepackage{booktabs} % toprule
 \usepackage[mathcal]{eucal}
-\usepackage[thehwcnt = 1]{iidef} % 作业编号
+\usepackage[thehwcnt = 2]{iidef} % 作业编号
 \everymath{\displaystyle}
 
 
@@ -33,159 +33,95 @@ proofname = \heiti{证明}
 \begin{enumerate}
   \setlength{\itemsep}{3\parskip}
 
-  % 题目2
-  \item 已知$4$个四位有效数字的三角函数的值$\sin 1^\circ =0.0175$, $\sin 2^\circ =0.0349$, $\cos 1 ^ \circ = 0.9998$, $\cos 2 ^\circ = 0.9994$.用以下四种方法计算$1 - \cos 2 ^ \circ$的值，比较结果的误差，并说明各有多少位有效数字.
-  \begin{enumerate}[label=（\arabic*）]
-    % (1)
-    \item 直接用已知数字计算；
-    \begin{solution}
-      直接计算
-      \begin{align*}
-        &x_A=1 - \cos 2^\circ = 1 - 0.9994 = 10^{-3}\times0.6
-        \end{align*}
-      误差
-        \begin{align*}
-        &\left |  x-x_A\right | \le 0.5\times10^{-4}\\
-        &n=-3-(-4)=1
-      \end{align*}
-      有效数字为$1$位.
-    \end{solution}
-    % (2)
-    \item 用公式$1-\cos 2x = 2 \sin^2 x$及已知数据；
-    \begin{solution}
-      \begin{align*}
-        &x_A=1 - \cos 2^\circ = 2\sin^2 1^\circ = 2\times 0.0175^2 =10^{-3}\times0.6125
-      \end{align*}
-      误差
-        \begin{align*}
-        &\left |  x-x_A\right | \le 0.5\times10^{-5}\\
-        &n=-3-(-5)=2
-      \end{align*}
-      有效数字为$2$位.
-    \end{solution}
-    % (3)
-    \item 用公式$1-\cos x = \frac{\sin^2 x}{1+\cos x}$及已知数据；
-    \begin{solution}
-      \begin{align*}
-        &x_A=1 - \cos 2^\circ = \frac{\sin^2 2^\circ}{1+\cos 2^\circ} = \frac{0.0349^2}{1+0.9994}\approx 10^{-3}\times0.60918
-      \end{align*}
-      误差
-      \begin{align*}
-        &\left |  x-x_A\right | \le 0.5\times10^{-7}\\
-        &n=-3-(-7)=4
-      \end{align*}
-      有效数字为$4$位.
-    \end{solution} 
-    % (4)
-    \item 用$1-\cos x$的Taylor（泰勒）展开式，要计算结果有四位有效数字（$1-\cos 2^\circ =6.0917298\cdots \times 10^{-4}$）
-    \begin{solution}
-      \begin{align*}
-        x_A=1 - \cos 2^\circ &= \sum_{i=1}^n (-1)^{i-1}\frac{(2^\circ)^{2i}}{(2i)!}\\
-        &\approx \frac{(2\times\frac{\pi}{180})^2}{2!}-\frac{(2\times\frac{\pi}{180})^4}{4!}\\
-        &\approx 10^{-3}\times0.60917298
-      \end{align*}
-      误差
-      \begin{align*}
-        &\left |  x-x_A\right | \le 0.5\times10^{-7}\\
-        &n>-3-(-7)=4
-      \end{align*}
-      有效数字$>4$位.
-    \end{solution}
-  \end{enumerate}
-  
+  % 补充题
+  \item 设$A\in\mathbb{R}^{n\times n}$,$x\in\mathbb{R}^{n}$.证明:$\|Ax\|_{2}\leq\|A\|_{F}\|x\|_{2}$
+  \begin{proof}
+    设$A=[a_{ij}]_{i,j=1}^{n}$,则
+    $A^TA=\begin{bmatrix}
+      \sum_{1}^{n}a_{i1}^2&\sum_{1}^{n}a_{i1}a_{i2}&\cdots&\sum_{1}^{n}a_{i1}a_{in}\\
+      \sum_{1}^{n}a_{i2}a_{i1}&\sum_{1}^{n}a_{i2}^2&\cdots&\sum_{1}^{n}a_{i2}a_{in}\\
+      \vdots&\vdots&\ddots&\vdots\\
+      \sum_{1}^{n}a_{in}a_{1j}&\sum_{1}^{n}a_{in}a_{i2}&\cdots&\sum_{1}^{n}a_{in}^2
+      \end{bmatrix}$,
+    $\mathrm{tr}(A^TA)=\sum_{i,j}$
+  \end{proof}
 
-  % 题目3
-  \item 下面是两种利用$9$次Taylor多项式近似计算$e^{-5}$的方法，试分析哪种方法能提供较好的近似值.
+  % 题目8
+  \item 已知 $x_0, x_1, x_2, \cdots, x_m \in [a, b]$, 下面的 $(f, g)$ 是否能构成 $C[a, b]$ 上的内积？证明你的结论.
   \begin{enumerate}[label=（\arabic*）]
-    \item $\mathrm{e}^{-5}\approx\sum_{i=0}^9\left(-1\right)^i\frac{5^i}{i!}$
-    \item $\mathrm{e}^{-5}\approx\left(\sum_{i=0}^9\frac{5^i}{i!}\right)^{-1}$
+    \item $(f,g)=\int_{a}^{b}f(x)g(x)\mathrm{d}x,\forall f,g\in C[a,b]$;
+    \item $(f,g)=\sum_{i=0}^{m}f(x_{i})g(x_{i}),\forall f,g\in C[a,b].$
     \begin{solution}
-      \begin{align*}
-        \begin{tabular}{c|c|c} % <-- Alignments: 1st column left, 2nd middle and 3rd right, with vertical lines in between
-          $x$ & $\sum_{i=0}^x\left(-1\right)^i\frac{5^i}{i!}$ & $\left(\sum_{i=0}^x\frac{5^i}{i!}\right)^{-1}$\\
-          \hline
-          0	&1	&1\\
-          1	&-4	&0.166666667\\
-          2	&8.5	&0.054054054\\
-          3	&-12.33333333	&0.025423729\\
-          4	&13.70833333	&0.015296367\\
-          5	&-12.33333333	&0.010938924\\
-          6	&9.368055556	&0.008840322\\
-          7	&-6.132936508	&0.007774898\\
-          8	&3.555183532	&0.007230283\\
-          9	&-1.827105379	&0.006959453
-        \end{tabular}
-      \end{align*}
-      显然第二种方法更好.
+      
     \end{solution}
     
   \end{enumerate}
 
-  % 题目5
-  \item 下列公式要怎样变换才能使数值计算时能避免有效数字的损失？
+  % 题目11
+  \item 求下列矩阵 $A$ 的范数 $\|A\|_1$, $\|A\|_2$, $\|A\|_F$ 和 $\rho(A)$.
   \begin{enumerate}[label=（\arabic*）]
-    \item $\int_N^{N+1}\frac{1}{1+x^2}\mathrm{d}x=\arctan(N+1)-\arctan N$，$N>>1$;
+    \item $A=\left[\begin{array}{cc}1&-2\\-3&4\end{array}\right];$
     \begin{solution}
-      \begin{align*}
-        &\arctan(N+1)-\arctan N=\arctan\left(\frac{1}{1+(N+1)N}\right)
-      \end{align*}
+      
     \end{solution}
-    \item $\sqrt{x^2+\frac{1}{x}}-\sqrt{x^2-\frac{1}{x}}$，$|x|>>1$;
+    \item $A=\begin{bmatrix}2&-1&0\\\\-1&2&-1\\\\0&-1&2\end{bmatrix}.$
     \begin{solution}
-      \begin{align*}
-        &\sqrt{x^2+\frac{1}{x}}-\sqrt{x^2-\frac{1}{x}}=\frac{2}{x\left(\sqrt{x^2+\frac{1}{x}}+\sqrt{x^2-\frac{1}{x}}\right)}
-      \end{align*}
-    \end{solution}
-    \item $\ln(x+1)-\ln x$，$x>>1$;
-    \begin{solution}
-      \begin{align*}
-        &\ln(x+1)-\ln x=\ln\left(\frac{x+1}{x}\right)=\ln\left(1+\frac{1}{x}\right)
-      \end{align*}
-    \end{solution}
-    \item $\cos^2x-\sin^2x$，$x\approx\frac{\pi}{4}$
-    \begin{solution}
-      \begin{align*}
-        &\cos^2x-\sin^2x=\cos 2x
-      \end{align*}
+      
     \end{solution}
   \end{enumerate}
 
-  % 题目7
-  \item 已知$I_n=\int_0^1x^n\mathrm{e}^{x-1}\mathrm{d}x,n=0,1,\cdots$,满足$I_0=1-\mathrm{e}^{-1},I_n=1-nI_{n-1},n=1,2,\cdots$.
+  % 题目12
+  \item 证明
   \begin{enumerate}[label=（\arabic*）]
-    \item 取$I_0$近似值$\tilde{I}_{0}=1-0.3679$，用递推公式$\tilde{I}_{n}=1-n\tilde{I}_{n-1}$计算$I_n$的近似值$\tilde{I}_n,n=1,2,\cdots ,9$(用四位有效数字计算),结果是否准确？
-    \begin{solution}
-      \begin{align*}
-        \begin{tabular}{c|c|c} % <-- Alignments: 1st column left, 2nd middle and 3rd right, with vertical lines in between
-          $n$ & $\tilde{I}_n$ & $I_n$\\
-          \hline
-          0	&0.6321 	&0.632120559\\
-          1	&0.3679 	&0.367879441\\
-          2	&0.2642 	&0.264241118\\
-          3	&0.2074 	&0.207276647\\
-          4	&0.1704 	&0.170893412\\
-          5	&0.1480 	&0.145532941\\
-          6	&0.1120 	&0.126802357\\
-          7	&0.2160 	&0.112383504\\
-          8	&-0.7280 	&0.100931967\\
-          9	&7.552 	&0.091612293
-        \end{tabular}
-      \end{align*}
-      从$n=7$开始，误差过大，不准确.
-    \end{solution}
-    \item 设$\varepsilon_n=I_n-\tilde{I}_n$，推导$\mid\varepsilon_n\mid$与$\mid\varepsilon_0\mid$的关系.
-    \begin{solution}
-      \begin{align*}
-        &\varepsilon_n=I_n-\tilde{I}_n=1-nI_{n-1}-(1-n\tilde{I}_{n-1})=-n\varepsilon_{n-1}\\
-        &\mid\varepsilon_n\mid=n\mid\varepsilon_{n-1}\mid=n(n-1)\mid\varepsilon_{n-2}\mid=\cdots=n!\mid\varepsilon_0\mid
-      \end{align*}
-    \end{solution}
+    \item $\| x \|_\infty \leqslant \| x \|_1 \leqslant n \| x \|_\infty, \forall x \in \mathbb{R}^n,$
+    \begin{proof}
+      
+    \end{proof}
+    \item $\| x \|_{\infty} \leqslant \| x \|_{2} \leqslant \sqrt{n} \| x \|_{\infty}, \quad \forall x \in \mathbb{R}^{n};$
+    \begin{proof}
+      
+    \end{proof}
+    \item $\|A\|_2 \leqslant \|A\|_F \leqslant \sqrt{n} \|A\|_2, \quad \forall A \in \mathbb{R}^{n \times n}.$
+    \begin{proof}
+      
+    \end{proof}
   \end{enumerate}
 
+  % 题目15
+  \item $A\in \mathbb{R} ^{n\times n}$,设 $A$ 对称正定 ,记
+  $$\left\|x\right\|_A\:=\:\sqrt{\left(Ax,x\right)}\:,\quad\forall\:x\:\in\:\mathbb{R}^n\:,$$
+  证明$\left\|x\right\|_A$为$\mathbb{R}^n$上的一种向量范数.
+  \begin{proof}
+    
+  \end{proof}
+  
+  % 题目17
+  \item 设$A,\boldsymbol{Q}\in\mathbb{R}^{n\times n},\boldsymbol{Q}$为正交矩阵，证明：
+  $$\begin{aligned}&\left\|AQ\right\|_{2}\:=\:\left\|QA\right\|_{2}\:=\:\left\|A\right\|_{2}\:,\\&\left\|AQ\right\|_{F}\:=\:\left\|QA\right\|_{F}\:=\:\left\|A\right\|_{F}.\end{aligned}$$
+  \begin{proof}
+    
+  \end{proof}
+
+  % 题目21
+  \item 设
+  $$A\:=\:\begin{bmatrix}a&1&0\\\\b&2&1\\\\0&1&2\end{bmatrix}\:,$$
+  分别求出所有$a,b$的值，使得
+  \begin{enumerate}[label=（\arabic*）]
+    \item $A$奇异;
+    \begin{solution}
+      
+    \end{solution}
+    \item $A$严格对角占优;
+    \begin{solution}
+      
+    \end{solution}
+    \item $A$对称正定.
+    \begin{solution}
+      
+    \end{solution}
+  \end{enumerate}
 \end{enumerate}
 \end{document}
-\begin{equation}
-\end{equation}
 
 %%% Local Variables:
 %%% mode: late\rvx
