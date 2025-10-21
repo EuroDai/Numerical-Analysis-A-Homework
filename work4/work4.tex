@@ -84,7 +84,25 @@ proofname = \heiti{证明}
   % 题目12
   \item 设$A$对称正定 ,其特征值$\lambda_1\geq\lambda_2\geq\cdots\geq\lambda_n>0.$证明迭代法$$x^{(k+1)}\:=\:x^{(k)}\:+\:\omega(\:b\:-\:Ax^{(k)}\:)\:,\quad k\:=\:0\:,1\:,\cdots $$当 $\omega\in\left(0,\frac{2}{\lambda_{1}}\right)$时收敛，并讨论$\omega$取什么值时收敛最快？
   \begin{solution}
-    
+    迭代矩阵$B=I-\omega A$，其特征值为$\mu_i=1-\omega\lambda_i$，$i=1,2,\cdots,n$.\\
+    收敛时，由充要条件$\rho(B)=\max\{|1-\omega\lambda_1|,|1-\omega\lambda_n|\}<1$.\\
+    得到
+    \[\begin{cases}
+      |1-\omega\lambda_1|<1\\
+      |1-\omega\lambda_n|<1
+    \end{cases}\Rightarrow 0<\omega<\frac{2}{\lambda_1}.\]\\
+    所以，当 $\omega\in\left(0,\frac{2}{\lambda_{1}}\right)$时收敛.\\
+    由渐进收敛率$R(B)=-\ln\max\{|1-\omega\lambda_1|,|1-\omega\lambda_n|\}$
+    \begin{align*}
+      &|1-w\lambda_1|>|1-w\lambda_n|\\
+      &\textcircled{1}1-w\lambda_n\leq0\Rightarrow\frac{1}{\lambda_n}\leq w<\frac{1}{\lambda_1}\\
+      &\textcircled{2}
+      \begin{cases}
+        w\lambda_1-1\geqslant1-w\lambda_n\Rightarrow\frac{2}{\lambda_1+\lambda_n}\leqslant w\leqslant\frac{2}{\lambda_1}\\w\lambda_1-1\geqslant0\end{cases}\\
+        &\left|1-w\lambda_n\right|>\left|1-w\lambda_1\right|\\
+        &\textcircled{1}1-w\lambda_{1}\leq0\Rightarrow0<w\leq\frac{1}{\lambda_{1}}\\
+        &\textcircled{2}\begin{cases}1-w\lambda_{n}\geq0\\1-w\lambda_{1}\leq0\end{cases}\Rightarrow\frac{1}{\lambda_{1}}\leq w\leq\frac{1}{\lambda_{n}}
+    \end{align*}
   \end{solution}
 
 
@@ -95,22 +113,122 @@ proofname = \heiti{证明}
   \begin{array}{rrrrr}
   10x_1 & - x_2 &              & = & 9,\\
   - x_1 & + 10x_2 & - 2x_3 & = & 7,\\
-        &   2x_2 & + 10x_3 & = & 6.
+        & - 2x_2 & + 10x_3 & = & 6.
   \end{array}
   \right.
   $$
   \begin{enumerate}[label=(\arabic*)]
     \item 写出SOR法计算公式;
+    \begin{solution}
+      设$A=\begin{bmatrix}
+      10 & -1 & 0 \\
+      -1 & 10 & -2 \\
+      0 & -2 & 10
+      \end{bmatrix}$，$b=\begin{bmatrix}
+      9 \\
+      7 \\
+      6
+      \end{bmatrix}$，则$D=\begin{bmatrix}
+      10 & 0 & 0 \\
+      0 & 10 & 0 \\
+      0 & 0 & 10
+      \end{bmatrix}$，$L=\begin{bmatrix}
+      0 & 0 & 0 \\
+      -1 & 0 & 0 \\
+      0 & -2 & 0
+      \end{bmatrix}$，$U=\begin{bmatrix}
+      0 & -1 & 0 \\
+      0 & 0 & -2 \\
+      0 & 0 & 0
+      \end{bmatrix}$\\
+      则SOR迭代格式为
+      $$x^{(k+1)}=\left(D-\omega L\right)^{-1}\left[\omega b+\left(1-\omega\right)Dx^{(k)}+\omega Ux^{(k)}\right]$$
+    \end{solution}
     \item 求最优松弛因子及$\omega=\omega_b$时SOR法的渐近收敛率;
+    \begin{solution}
+      $B_J=D^{-1}(L+U)=\begin{bmatrix}
+      0 & -0.1 & 0 \\
+      -0.1 & 0 & -0.2 \\
+      0 & -0.2 & 0
+      \end{bmatrix}$\\
+      计算特征值，得$\lambda_1=\frac{\sqrt{5}}{10},\lambda_2=\frac{-\sqrt{5}}{10},\lambda_3=0$\\
+      则$\rho(B_J)=\frac{\sqrt{5}}{10}$\\
+      最优松弛因子$\omega_{b}=\frac{2}{1+\sqrt{1-\rho(B_J)^2}}=\frac{2}{1+\sqrt{1-\left(\frac{\sqrt{5}}{10}\right)^2}}=40-4\sqrt{95}$\\
+      迭代矩阵$B=\left(D-\omega L\right)^{-1}\left[(1-\omega)D+\omega U\right]=\begin{bmatrix} - 0.0128& - 0.1013&0 \\ 0.0013& - 0.0026& - 0.2026 \\  - 0.0003&0.0005&0.0282\end{bmatrix}$\\
+      谱半径$\rho(B)=0.0128$\\
+      渐进收敛率$R(B)=-\ln\rho(B)=4.358$
+    \end{solution}
     \item 取$x^{(0)}=\left(0,0,0\right)^{\mathrm{T}}$,用$\omega=\omega_b$的 SOR 法求 $x^{(1)},x^{(2)},x^{(3)}$
+    \begin{solution}
+      由（1）中的公式得\\$$x^{(1)} = \begin{bmatrix}0.911540\\ 0.801299\\ 0.770008\end{bmatrix}^T, 
+x^{(2)} = \begin{bmatrix}0.981009\\ 0.954036\\ 0.791074\end{bmatrix}^T
+x^{(3)} = \begin{bmatrix}0.995588\\ 0.957822\\ 0.791571\end{bmatrix}^T$$
+    \end{solution}
   \end{enumerate}
 
   % 题目18(2)
-  \item 取初始向量为零向量，用共瓶梯度法解方程组
+  \item 取初始向量为零向量，用共轭梯度法解方程组
   $$\begin{bmatrix}4 & 3 & 0 \\ 3 & 4 & -1 \\ 0 & -1 & 4\end{bmatrix}\begin{bmatrix}x_{1} \\ x_{2} \\ x_{3}\end{bmatrix}=\begin{bmatrix}3 \\ 5 \\ -5\end{bmatrix}.$$
-  \begin{proof}
-  
-  \end{proof}
+  \begin{solution}
+    选取 $\begin{aligned}&x^{(0)}\in R^n,\\&p^{(0)}=r^{(0)}=b-Ax^{(0)},\end{aligned}$\\
+    对 $k= 0, 1, \cdots$\\
+   $\alpha_k=\displaystyle\frac{(r^{(k)},r^{(k)})}{(Ap^{(k)},p^{(k)})},$\\
+   $x^{(k+1)}=x^{(k)}+\alpha_kp^{(k)},$\\
+   $r^{(k+1)}=r^{(k)}-\alpha_kAp^{(k)},$\\
+   $\beta_k=\displaystyle\frac{(r^{(k+1)},r^{(k+1)})}{(r^{(k)},r^{(k)})},$\\
+   $p^{(k+1)}=r^{(k+1)}+\beta_kr^{(k)}.$\\
+   第一次迭代：
+\[
+\alpha_0=\frac{r^{(0)T}r^{(0)}}{p^{(0)T}Ap^{(0)}}=\frac{59}{376}\approx0.1569.
+\]
+\[
+x^{(1)}=x^{(0)}+\alpha_0 p^{(0)}=
+\begin{bmatrix}
+0.4707\\
+0.7846\\
+-0.7846
+\end{bmatrix},\quad
+r^{(1)}=r^{(0)}-\alpha_0 A p^{(0)}=
+\begin{bmatrix}
+-1.2367\\
+-0.3351\\
+-1.0771
+\end{bmatrix}.
+\]
+
+第二次迭代：
+\[
+\alpha_1=\frac{r^{(1)T}r^{(1)}}{p^{(1)T}A p^{(1)}}\approx0.2311.
+\]
+\[
+x^{(2)}=x^{(1)}+\alpha_1 p^{(1)}=
+\begin{bmatrix}
+0.2179\\
+0.7620\\
+-1.0884
+\end{bmatrix},\quad
+r^{(2)}=
+\begin{bmatrix}
+-0.1575\\
+0.2100\\
+0.1155
+\end{bmatrix}.
+\]
+
+第三次迭代：
+\[
+\alpha_2\approx1.1490.
+\]
+\[
+x^{(3)}=x^{(2)}+\alpha_2 p^{(2)}=
+\begin{bmatrix}
+0\\
+1\\
+-1
+\end{bmatrix},\quad
+r^{(3)}=0.
+\]
+  \end{solution}
 \end{enumerate}
 \end{document}
 
