@@ -36,25 +36,33 @@ proofname = \heiti{证明}
   % 补充题
   \item 设$A\in\mathbb{R}^{n\times n}$,$x\in\mathbb{R}^{n}$.证明:$\|Ax\|_{2}\leq\|A\|_{F}\|x\|_{2}$
   \begin{proof}
-    设$A=[a_{ij}]_{i,j=1}^{n}$,则
-    $A^TA=\begin{bmatrix}
+    设$A=[a_{ij}]_{i,j=1}^{n}$,特征值为$\lambda_i$,\\则$A^TA=\begin{bmatrix}
       \sum_{1}^{n}a_{i1}^2&\sum_{1}^{n}a_{i1}a_{i2}&\cdots&\sum_{1}^{n}a_{i1}a_{in}\\
       \sum_{1}^{n}a_{i2}a_{i1}&\sum_{1}^{n}a_{i2}^2&\cdots&\sum_{1}^{n}a_{i2}a_{in}\\
       \vdots&\vdots&\ddots&\vdots\\
       \sum_{1}^{n}a_{in}a_{1j}&\sum_{1}^{n}a_{in}a_{i2}&\cdots&\sum_{1}^{n}a_{in}^2
-      \end{bmatrix}$,
-    $\mathrm{tr}(A^TA)=\sum_{i,j}$
+      \end{bmatrix}$,特征值为$\lambda_i^2\ge0$\\
+    $\mathrm{tr}(A^TA)=\sum_{i,j}a_{ij}=\|A\|_{F}^2\ge \max_{\lambda\in\sigma(A)}\lambda^2=\|A\|_{2}^2$, 所以$\|A\|_{2}\le\|A\|_{F}$\\
+    所以$\|Ax\|_{2}\leq\|A\|_{2}\|x\|_{2}\leq\|A\|_{F}\|x\|_{2}$
   \end{proof}
 
   % 题目8
   \item 已知 $x_0, x_1, x_2, \cdots, x_m \in [a, b]$, 下面的 $(f, g)$ 是否能构成 $C[a, b]$ 上的内积？证明你的结论.
   \begin{enumerate}[label=（\arabic*）]
     \item $(f,g)=\int_{a}^{b}f(x)g(x)\mathrm{d}x,\forall f,g\in C[a,b]$;
+    \begin{solution}
+      性质如下
+      \begin{enumerate}[label=（\roman*）]
+        \item 正定性: $(f,f)=\int_{a}^{b}f^2(x)\mathrm{d}x\ge 0$,当且仅当$f(x)=0$时等号成立.
+        \item 线性: $(\alpha f+\beta g,h)=\int_{a}^{b}\left[\alpha f(x)+\beta g(x)\right]h(x)\mathrm{d}x=\alpha \int_{a}^{b}f(x)h(x)\mathrm{d}x+\beta \int_{a}^{b}g(x)h(x)\mathrm{d}x=\alpha (f,h)+\beta (g,h)$
+        \item 对称性: $(f,g)=\int_{a}^{b}f(x)g(x)\mathrm{d}x=\int_{a}^{b}g(x)f(x)\mathrm{d}x=(g,f)$
+      \end{enumerate}
+      所以$(f,g)$能构成 $C[a, b]$ 上的内积.
+    \end{solution}
     \item $(f,g)=\sum_{i=0}^{m}f(x_{i})g(x_{i}),\forall f,g\in C[a,b].$
     \begin{solution}
-      
+      当$x_i=i\pi$,$f(x)=\sin x$,此时$(f,f)=0$,但$f(x)\neq 0$,所以不满足正定性,不能构成内积.
     \end{solution}
-    
   \end{enumerate}
 
   % 题目11
@@ -62,11 +70,25 @@ proofname = \heiti{证明}
   \begin{enumerate}[label=（\arabic*）]
     \item $A=\left[\begin{array}{cc}1&-2\\-3&4\end{array}\right];$
     \begin{solution}
-      
+      $A$的特征多项式为
+      \begin{align*}
+        &det(\lambda I - A) = \begin{vmatrix}\lambda-1&2\\3&\lambda-4\end{vmatrix}= \lambda^2 - 5\lambda - 2=(\lambda-\frac{5+\sqrt{33}}{2})(\lambda-\frac{5-\sqrt{33}}{2})\\
+        &\|A\|_1=\max_j\sum_i|a_{ij}|=6,\\
+        &\|A\|_2=\sqrt{\rho(A^TA)}=\frac{5+\sqrt{33}}{2},\\
+        &\|A\|_F=\sqrt{\sum_{i,j}a_{ij}^2}=\sqrt{30},\\
+        &\rho(A)=\max|\lambda_i|=\frac{5+\sqrt{33}}{2}.
+      \end{align*}
     \end{solution}
     \item $A=\begin{bmatrix}2&-1&0\\\\-1&2&-1\\\\0&-1&2\end{bmatrix}.$
     \begin{solution}
-      
+      $A$的特征多项式为
+      \begin{align*}
+        &det(\lambda I - A) = \begin{vmatrix}\lambda-2&1&0\\1&\lambda-2&1\\0&1&\lambda-2\end{vmatrix}=(\lambda-2)(\lambda-(2+\sqrt{2}))(\lambda-(2-\sqrt{2}))\\
+        &\|A\|_1=\max_j\sum_i|a_{ij}|=4,\\
+        &\|A\|_2=\sqrt{\rho(A^TA)}=2+\sqrt{2},\\
+        &\|A\|_F=\sqrt{\sum_{i,j}a_{ij}^2}=4,\\
+        &\rho(A)=\max|\lambda_i|=2+\sqrt{2}.
+      \end{align*}
     \end{solution}
   \end{enumerate}
 
@@ -75,15 +97,17 @@ proofname = \heiti{证明}
   \begin{enumerate}[label=（\arabic*）]
     \item $\| x \|_\infty \leqslant \| x \|_1 \leqslant n \| x \|_\infty, \forall x \in \mathbb{R}^n,$
     \begin{proof}
-      
+      $\max_{1\leq k\leq n}|x_k|\le \sum_{k=1}^n|x_k| \le n\max_{1\leq k\leq n}|x_k|$,即$\| x \|_\infty \leqslant \| x \|_1 \leqslant n \| x \|_\infty$
     \end{proof}
     \item $\| x \|_{\infty} \leqslant \| x \|_{2} \leqslant \sqrt{n} \| x \|_{\infty}, \quad \forall x \in \mathbb{R}^{n};$
     \begin{proof}
-      
+      $\max_{1\leq k\leq n}|x_k|\le \sqrt{\sum_{k=1}^n|x_k|^2} \le \sqrt{n}\max_{1\leq k\leq n}|x_k|$,即$\| x \|_{\infty} \leqslant \| x \|_{2} \leqslant \sqrt{n} \| x \|_{\infty}$
     \end{proof}
     \item $\|A\|_2 \leqslant \|A\|_F \leqslant \sqrt{n} \|A\|_2, \quad \forall A \in \mathbb{R}^{n \times n}.$
     \begin{proof}
-      
+      由题目2.1可知$tr(A^TA)=\sum_{i,j}a_{ij}^2=\|A\|_F^2\ge \max_{\lambda\in\sigma(A)}\lambda^2=\|A\|_{2}^2$, 所以$\|A\|_{2}\le\|A\|_{F}$\\
+      又$tr(A^TA)\le n\max_{\lambda\in\sigma(A)}\lambda^2=n\|A\|_{2}^2$,所以$\|A\|_{F}\le \sqrt{n}\|A\|_{2}$\\
+      综上所述$\|A\|_2 \leqslant \|A\|_F \leqslant \sqrt{n} \|A\|_2$
     \end{proof}
   \end{enumerate}
 
@@ -92,7 +116,12 @@ proofname = \heiti{证明}
   $$\left\|x\right\|_A\:=\:\sqrt{\left(Ax,x\right)}\:,\quad\forall\:x\:\in\:\mathbb{R}^n\:,$$
   证明$\left\|x\right\|_A$为$\mathbb{R}^n$上的一种向量范数.
   \begin{proof}
-    
+    性质如下
+    \begin{enumerate}[label=（\roman*）]
+      \item 正定性: $\|x\|_A=\sqrt{(Ax,x)}\ge0$,当且仅当$x=0$时等号成立.
+      \item 线性: $\|\alpha x\|_A=\sqrt{(A(\alpha x),\alpha x)}=\sqrt{\alpha^2(Ax,x)}=|\alpha|\|x\|_A$
+      \item 三角不等式: $\|x+y\|_A^2=(A(x+y),x+y)=(Ax,x)+(Ay,y)+(Ax,y)+(Ay,x)\le \|x\|_A^2+\|y\|_A^2+2\|x\|_A\|y\|_A=(\|x\|_A+\|y\|_A)^2$,所以$\|x+y\|_A\le \|x\|_A+\|y\|_A$
+    \end{enumerate}
   \end{proof}
   
   % 题目17
