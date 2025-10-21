@@ -1,0 +1,136 @@
+% Homework template for Inference and Information
+% UPDATE: September 26, 2017 by Xiangxiang
+\documentclass[a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{ctex}
+\ctexset{
+proofname = \heiti{证明}
+}
+\usepackage{amsmath, amssymb, amsthm}
+% amsmath: equation*, amssymb: mathbb, amsthm: proof
+\usepackage{moreenum}
+\usepackage{mathtools}
+\usepackage{url}
+\usepackage{bm}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{booktabs} % toprule
+\usepackage[mathcal]{eucal}
+\usepackage[thehwcnt = 3]{iidef} % 作业编号
+\everymath{\displaystyle}
+
+
+\thecourseinstitute{清华大学机械工程系}
+\thecoursename{数值分析A}
+\theterm{2025年秋季学期}
+\hwname{作业}
+\slname{\heiti{解}}
+\begin{document}
+\courseheader
+\name{代卓远2025210205}
+
+\begin{enumerate}
+  \setlength{\itemsep}{3\parskip}
+
+  % 题目3
+  \item 将第 1 题的系数矩阵作 Doolittle 分解$:A=LU.$用直接三角分解方法解第 1 题的方程组 ,并求$\det A.$
+  $$\left[\begin{array}{cccc} 6 & 2 & 1 & -1 \\ 2 & 4 & 1 & 0 \\ 1 & 1 & 4 & -1 \\ -1 & 0 & -1 & 3 \end{array}\right]\left[\begin{array}{c} x_{1} \\ x_{2} \\ x_{3} \\ x_{4} \end{array}\right]=\left[\begin{array}{c} 6 \\ 1 \\ 5 \\ -5 \end{array}\right]$$
+  \begin{solution}
+    \begin{align*}
+      &a_{11}=6>0,\quad
+      \begin{vmatrix}
+        6 & 2 \\ 
+        2 & 4
+      \end{vmatrix}=20>0,\quad
+      \begin{vmatrix}
+        6 & 2 & 1 \\ 
+        2 & 4 & 1 \\ 
+        1 & 1 & 4
+      \end{vmatrix}=78>0,\quad
+      \det(A)=191>0\\
+    \end{align*}
+    因此，$A$可LU分解得
+    $$A=LU=\begin{bmatrix} 1 & 0 & 0 & 0 \\ 1/3 & 1 & 0 & 0 \\ 1/6 & 1/5 & 1 & 0 \\ -1/6 & 1/10 & -9/37 & 1 \end{bmatrix} \begin{bmatrix} 6 & 2 & 1 & -1 \\ 0 & 10/3 & 2/3 & 1/3 \\ 0 & 0 & 37/10 & -9/10 \\ 0 & 0 & 0 & 191/74 \end{bmatrix}$$
+    $Ly=b,Ux=y$得
+    $$x=\begin{bmatrix} 151/191 \\ -69/191 \\165/191 \\ -213/191 \end{bmatrix}$$
+  \end{solution}
+
+  % 题目8
+  \item 用 Cholesky 方法 (平方根法) 解方程组
+  $$\begin{bmatrix}
+  16 & 4 & 8 \\
+  4 & 5 & -4 \\
+  8 & -4 & 22
+  \end{bmatrix}
+  \begin{bmatrix}
+  x_1 \\
+  x_2 \\
+  x_3
+  \end{bmatrix}
+  =
+  \begin{bmatrix}
+  -4 \\
+  3 \\
+  10
+  \end{bmatrix}.$$
+  \begin{solution}
+    $$LU=\begin{bmatrix}1&0&0\\1/4&1&0\\1/2&-3/2&1\end{bmatrix}\begin{bmatrix}16&4&8\\0&4&-6\\0&0&9\end{bmatrix}=
+    \begin{bmatrix}
+      4 & 0 & 0 \\
+      1 & 2 & 0 \\
+      2 & -3 & 3
+    \end{bmatrix}\begin{bmatrix}
+      4 & 0 & 0 \\
+      1 & 2 & 0 \\
+      2 & -3 & 3
+    \end{bmatrix}^T$$
+    $Ly=b,Ux=y$得
+    $$x=\begin{bmatrix} -9/4 \\ 4 \\2 \end{bmatrix}$$
+  \end{solution}
+
+  % 题目15
+  \item 已知 $A = \begin{bmatrix} 1 & 1 \\ -5 & 1 \end{bmatrix}$，$B = \begin{bmatrix} 2 & -1 & 0 \\ -1 & 2 & -1 \\ 0 & -1 & 2 \end{bmatrix}$，试求 $\operatorname{cond}(A)_{\infty}$ 和 $\operatorname{cond}(B)_{2}$。
+  \begin{solution}
+    $$\text{cond}(A)_\infty=\|A\|_\infty\|A^{-1}\|_\infty=6$$
+    $$\text{cond}(B)_2=\|B\|_2\|B^{-1}\|_2=3+2\sqrt{2}$$
+  \end{solution}
+
+
+  % 题目18
+  \item 设$A\in\mathbb{R}^{n\times n}$, $A$非奇异，且$\|A^{-1}\|\|\delta A\|<1$，试证明$(A+\delta A)^{-1}$存在，且
+  $$\frac{\|A^{-1}-(A+\delta A)^{-1}\|}{\|A^{-1}\|}\leqslant\frac{\text{cond}(A)\frac{\|\delta A\|}{\|A\|}}{1-\text{cond}(A)\frac{\|\delta A\|}{\|A\|}}.$$
+  \begin{proof}
+    $A+\delta A$非奇异，且
+    \begin{align*}
+      A^{-1}-(A+\delta A)^{-1}=(A^{-1}(A+\delta A)-I)(A+\delta A)^{-1}=A^{-1}\delta A(A+\delta A)^{-1}
+    \end{align*}
+    因此
+    \begin{align*}
+      \|A^{-1}-(A+\delta A)^{-1}\|&\leqslant\|A^{-1}\|\|\delta A\|\|(A+\delta A)^{-1}\|\\
+      &\leqslant\|A^{-1}\|\|\delta A\|\frac{\|A^{-1}\|}{1-\|A^{-1}\|\|\delta A\|}\\
+      &=\frac{\text{cond}(A)\frac{\|\delta A\|}{\|A\|}}{1-\text{cond}(A)\frac{\|\delta A\|}{\|A\|}}\|A^{-1}\|
+    \end{align*}
+
+  \end{proof}  
+
+  % 题目19
+  \item 设 $A \in \mathbb{R}^{n \times n}, b \in \mathbb{R}^n$, $A$ 非奇异, $x$ 为方程组 $Ax=b$ 的解. 今 $A$ 有误差 $\delta A = \alpha A$, $b$ 有误差 $\delta b = \beta b$, 其中 $\alpha, \beta \in \mathbb{R}$, 满足 $|\alpha| < 1$, $|\beta| < 1$, 且 $\det(A + \delta A) \neq 0$. 向量 $x + \delta x$ 满足
+  $$(A + \delta A)(x + \delta x) = b + \delta b,$$
+  试证明相对误差估计式
+  $$
+  \frac{\|\delta x\|_2}{\|x\|_2} \leqslant \frac{|\alpha| + |\beta|}{1 - |\alpha|}.$$
+  \begin{proof}
+    $$\begin{aligned}\frac{\|\delta x\|}{\|x\|}\leq\frac{\|A^{-1}\|\|A\|}{1-\|A^{-1}\|\|\delta A\|}\left(\frac{\|\delta b\|}{\|b\|}+\frac{\|\delta A\|}{\|A\|}\right)=\frac{\|A^{-1}\|\|A\|}{1-|\alpha| \|A^{-1}\|\|A\|}\left(|\alpha|+|\beta|\right)\end{aligned}$$
+    由于$\frac{x}{1-\|\alpha\|x}$单调递增，又$\|A^{-1}\|\|A\|=\text{cond}(A)\geq1$，因此
+    $$\frac{\|A^{-1}\|\|A\|}{1-|\alpha| \|A^{-1}\|\|A\|}\leq\frac{1}{1-|\alpha|}$$
+    综上所述，得证。
+  \end{proof}
+
+\end{enumerate}
+\end{document}
+
+%%% Local Variables:
+%%% mode: late\rvx
+%%% TeX-master: t
+%%% End:
