@@ -1,0 +1,120 @@
+% Homework template for Inference and Information
+% UPDATE: September 26, 2017 by Xiangxiang
+\documentclass[a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{ctex}
+\ctexset{
+proofname = \heiti{证明}
+}
+\usepackage{amsmath, amssymb, amsthm}
+% amsmath: equation*, amssymb: mathbb, amsthm: proof
+\usepackage{moreenum}
+\usepackage{mathtools}
+\usepackage{url}
+\usepackage{bm}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{booktabs} % toprule
+\usepackage[mathcal]{eucal}
+\usepackage[thehwcnt = 4]{iidef} % 作业编号
+\everymath{\displaystyle}
+
+
+\thecourseinstitute{清华大学机械工程系}
+\thecoursename{数值分析A}
+\theterm{2025年秋季学期}
+\hwname{作业}
+\slname{\heiti{解}}
+\begin{document}
+\courseheader
+\name{代卓远2025210205}
+
+\begin{enumerate}
+  \setlength{\itemsep}{4\parskip}
+
+  % 题目1
+  \item 下列向量序列$\{x^{(k)}\}$是否有极限?若有,写出其极限向量.
+  \begin{enumerate}[label=(\arabic*)]
+    \item $\boldsymbol{x}^{(k)}=\left(\mathrm{e}^{-k}\cos k,k\sin\frac{1}{k},3+\frac{1}{k^{2}}\right)^{\mathrm{T}}$
+    \begin{solution}
+      该向量序列有极限.\\
+      $\lim\limits_{k\to\infty}\mathrm{e}^{-k}\cos k=0$,\\
+      $\lim\limits_{k\to\infty}k\sin\frac{1}{k}=\lim\limits_{k\to\infty}\frac{\sin\frac{1}{k}}{\frac{1}{k}}=1$,\\
+      $\lim\limits_{k\to\infty}3+\frac{1}{k^{2}}=3$.\\
+      所以$\lim\limits_{k\to\infty}\boldsymbol{x}^{(k)}=\left(0,1,3\right)^{\mathrm{T}}$.
+    \end{solution}
+    \item $\boldsymbol{x}^{(k)}=\left(k\mathrm{e}^{-k^{2}},\frac{\cos k}{k},\sqrt{k^{2}+k}-k\right)^{\mathrm{T}}$
+    \begin{solution}
+      该向量序列有极限.\\
+      $\lim\limits_{k\to\infty}k\mathrm{e}^{-k^{2}}=0$,\\
+      $\lim\limits_{k\to\infty}\frac{\cos k}{k}=0$,\\
+      $\lim\limits_{k\to\infty}\sqrt{k^{2}+k}-k=\lim\limits_{k\to\infty}\frac{(\sqrt{k^{2}+k}-k)(\sqrt{k^{2}+k}+k)}{\sqrt{k^{2}+k}+k}=\lim\limits_{k\to\infty}\frac{k}{\sqrt{k^{2}+k}+k}=\lim\limits_{k\to\infty}\frac{1}{\sqrt{1+\frac{1}{k}}+1}=\frac{1}{2}$.\\
+      所以$\lim\limits_{k\to\infty}\boldsymbol{x}^{(k)}=\left(0,0,\frac{1}{2}\right)^{\mathrm{T}}$.
+    \end{solution}
+    
+  \end{enumerate}
+
+  % 题目8
+  \item 分析方程组$$\begin{bmatrix}
+  1 & a & 0 \\
+  a & 1 & a \\
+  0 & a & 1
+  \end{bmatrix}
+  \begin{bmatrix}
+  x_1 \\
+  x_2 \\
+  x_3
+  \end{bmatrix}
+  =
+  \begin{bmatrix}
+  b_1 \\
+  b_2 \\
+  b_3
+  \end{bmatrix}$$J法和GS法的收敛性.
+  \begin{solution}
+    \begin{align*}
+      &a_{11}=1>0\\
+      &\begin{vmatrix}1 & a \\ a & 1\end{vmatrix}=1-a^2>0\Rightarrow |a|<1\\
+      &\begin{vmatrix}1 & a & 0 \\ a & 1 & a \\ 0 & a & 1\end{vmatrix}=1-2a^2>0\Rightarrow |a|<\frac{\sqrt{2}}{2}\\
+    \end{align*}
+    综上所述，当$|a|<\frac{\sqrt{2}}{2}$时收敛.\\
+  \end{solution}
+
+  % 题目12
+  \item 设$A$对称正定 ,其特征值$\lambda_1\geq\lambda_2\geq\cdots\geq\lambda_n>0.$证明迭代法$$x^{(k+1)}\:=\:x^{(k)}\:+\:\omega(\:b\:-\:Ax^{(k)}\:)\:,\quad k\:=\:0\:,1\:,\cdots $$当 $\omega\in\left(0,\frac{2}{\lambda_{1}}\right)$时收敛，并讨论$\omega$取什么值时收敛最快？
+  \begin{solution}
+    
+  \end{solution}
+
+
+  % 题目14
+  \item 
+  $$
+  \left\{
+  \begin{array}{rrrrr}
+  10x_1 & - x_2 &              & = & 9,\\
+  - x_1 & + 10x_2 & - 2x_3 & = & 7,\\
+        &   2x_2 & + 10x_3 & = & 6.
+  \end{array}
+  \right.
+  $$
+  \begin{enumerate}[label=(\arabic*)]
+    \item 写出SOR法计算公式;
+    \item 求最优松弛因子及$\omega=\omega_b$时SOR法的渐近收敛率;
+    \item 取$x^{(0)}=\left(0,0,0\right)^{\mathrm{T}}$,用$\omega=\omega_b$的 SOR 法求 $x^{(1)},x^{(2)},x^{(3)}$
+  \end{enumerate}
+
+  % 题目18(2)
+  \item 取初始向量为零向量，用共瓶梯度法解方程组
+  $$\begin{bmatrix}4 & 3 & 0 \\ 3 & 4 & -1 \\ 0 & -1 & 4\end{bmatrix}\begin{bmatrix}x_{1} \\ x_{2} \\ x_{3}\end{bmatrix}=\begin{bmatrix}3 \\ 5 \\ -5\end{bmatrix}.$$
+  \begin{proof}
+  
+  \end{proof}
+\end{enumerate}
+\end{document}
+
+%%% Local Variables:
+%%% mode: late\rvx
+%%% TeX-master: t
+%%% End:

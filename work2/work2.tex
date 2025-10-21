@@ -120,7 +120,18 @@ proofname = \heiti{证明}
     \begin{enumerate}[label=（\roman*）]
       \item 正定性: $\|x\|_A=\sqrt{(Ax,x)}\ge0$,当且仅当$x=0$时等号成立.
       \item 线性: $\|\alpha x\|_A=\sqrt{(A(\alpha x),\alpha x)}=\sqrt{\alpha^2(Ax,x)}=|\alpha|\|x\|_A$
-      \item 三角不等式: $\|x+y\|_A^2=(A(x+y),x+y)=(Ax,x)+(Ay,y)+(Ax,y)+(Ay,x)\le \|x\|_A^2+\|y\|_A^2+2\|x\|_A\|y\|_A=(\|x\|_A+\|y\|_A)^2$,所以$\|x+y\|_A\le \|x\|_A+\|y\|_A$
+      \item 三角不等式: 
+        \begin{align*}
+          \|x+y\|_A^2&=(A(x+y),x+y)\\
+          &=(Ax,x)+(Ay,y)+(Ax,y)+(Ay,x)\\
+          &=(Ax,x)+(Ay,y)+2(Ax,y)
+        \end{align*}
+        由Cauchy-Schwarz不等式,$(Ax,y)^2\le (Ax,x)(Ay,y)$,即$(Ax,y)\le \|x\|_A\|y\|_A$，所以
+        \begin{align*}
+          \|x+y\|_A^2&\le \|x\|_A^2+\|y\|_A^2+2\|x\|_A\|y\|_A=(\|x\|_A+\|y\|_A)^2,\\
+          \|x+y\|_A&\le \|x\|_A+\|y\|_A
+        \end{align*}
+        综上所述$\|x\|_A$为$\mathbb{R}^n$上的一种向量范数.
     \end{enumerate}
   \end{proof}
   
@@ -128,7 +139,16 @@ proofname = \heiti{证明}
   \item 设$A,\boldsymbol{Q}\in\mathbb{R}^{n\times n},\boldsymbol{Q}$为正交矩阵，证明：
   $$\begin{aligned}&\left\|AQ\right\|_{2}\:=\:\left\|QA\right\|_{2}\:=\:\left\|A\right\|_{2}\:,\\&\left\|AQ\right\|_{F}\:=\:\left\|QA\right\|_{F}\:=\:\left\|A\right\|_{F}.\end{aligned}$$
   \begin{proof}
-    
+    对于2-范数
+    \begin{align*}
+      &\|AQ\|_2=\sqrt{\rho((AQ)^TAQ)}=\sqrt{\rho(AQ(AQ)^T)}=\sqrt{\rho(AQQ^TA^T)}=\sqrt{\rho(AA^T)}=\|A\|_2\\
+      &\|QA\|_2=\sqrt{\rho((QA)^TQA)}=\sqrt{\rho(A^TQ^TQA)}=\sqrt{\rho(A^TA)}=\|A\|_2\\
+    \end{align*}
+    对于Frobenius范数,AQ和QA都是正交变换,则变换后列(行)向量的模长不变,所以
+    \begin{align*}
+      &\|AQ\|_F=\sqrt{\sum_{i,j}(AQ)_{ij}^2}=\sqrt{\sum_{i,j}a_{ij}^2}=\|A\|_F\\
+      &\|QA\|_F=\sqrt{\sum_{i,j}(QA)_{ij}^2}=\sqrt{\sum_{i,j}a_{ij}^2}=\|A\|_F\\
+    \end{align*}
   \end{proof}
 
   % 题目21
@@ -138,16 +158,47 @@ proofname = \heiti{证明}
   \begin{enumerate}[label=（\arabic*）]
     \item $A$奇异;
     \begin{solution}
-      
+      \begin{align*}
+        &\det(A)=\begin{vmatrix}a&1&0\\b&2&1\\0&1&2\end{vmatrix}=3a-2b=0\\
+        &\Rightarrow b=\frac{3}{2}a
+      \end{align*}
     \end{solution}
     \item $A$严格对角占优;
     \begin{solution}
-      
+        \begin{align*}
+          &|a_{ii}|\geq\sum_{j\neq i}|a_{ij}|\\
+          &\Rightarrow 
+          \begin{cases}
+            |a|\geq1\\
+            2\geq|b|+1\\
+            2\geq1
+          \end{cases}
+          \Rightarrow 
+          \begin{cases}
+            |a|\geq1\\
+            |b|\leq1
+          \end{cases}
+        \end{align*}
     \end{solution}
     \item $A$对称正定.
     \begin{solution}
-      
+        对称性： $b=1$ \\
+        正定性：主子式均大于0
+        \begin{align*}
+          \begin{cases}
+            b = 1 \\
+            a > 0 \\
+            \begin{vmatrix}a & 1 \\ 1 & 2\end{vmatrix} = 2a - 1 > 0\\
+            \det(A) = 3a - 2 > 0
+          \end{cases}
+          \Rightarrow
+          \begin{cases}
+            b = 1 \\
+            a > \frac{2}{3}
+          \end{cases}
+        \end{align*}
     \end{solution}
+
   \end{enumerate}
 \end{enumerate}
 \end{document}
