@@ -1,0 +1,163 @@
+% Homework template for Inference and Information
+% UPDATE: September 26, 2017 by Xiangxiang
+\documentclass[a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{ctex}
+\ctexset{
+proofname = \heiti{证明}
+}
+\usepackage{amsmath, amssymb, amsthm}
+% amsmath: equation*, amssymb: mathbb, amsthm: proof
+\usepackage{extarrows}
+\usepackage{moreenum}
+\usepackage{mathtools}
+\usepackage{url}
+\usepackage{bm}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{booktabs} % toprule
+\usepackage[mathcal]{eucal}
+\usepackage[thehwcnt = 5]{iidef} % 作业编号
+\everymath{\displaystyle}
+
+
+\thecourseinstitute{清华大学机械工程系}
+\thecoursename{数值分析A}
+\theterm{2025年秋季学期}
+\hwname{作业}
+\slname{\heiti{解}}
+\begin{document}
+\courseheader
+\name{代卓远2025210205}
+
+\begin{enumerate}
+  \setlength{\itemsep}{4\parskip}
+
+  % 题目5
+  \item 设 $f\in C^{1}(\mathbb{R})$，满足 $f(x^{*})=0$，$0<m\leqslant f'(x)\leqslant M$。试证明迭代法$$x_{k+1}=x_{k}-\lambda f(x_{k})$$产生的序列 $\{x_{k}\}$ 对任意的 $x_{0}\in\mathbb{R}$ 及 $\lambda\in(0,\frac{2}{M})$ 均收敛到 $x^{*}$。
+  \begin{proof}
+    \[
+    x_{k+1}-x^{*}=x_{k}-x^{*}-\lambda(f(x_{k})-f(x^{*}))\xlongequal[]{\text{Lagrange}}\left(1-\lambda f'(\xi_{k})\right)(x_{k}-x^{*})
+    \]
+    其中 $\xi_{k}$ 在 $x_{k}$ 与 $x^{*}$ 之间。因为收敛所以
+    \[
+    |x_{k+1}-x^{*}|=|1-\lambda f'(\xi_{k})||x_{k}-x^{*}|\le |x_{k}-x^{*}|
+    \]
+    \[
+    -1\le 1-\lambda f'(\xi_{k})\le 1 \Rightarrow 0\le \lambda \le \frac{2}{f'(\xi_{k})}
+    \]
+    因为$(0,\frac{2}{M})\subseteq [0,\frac{2}{f'(\xi_{k})}]$\\
+    所以$\{x_{k}\}$ 对任意的 $x_{0}\in\mathbb{R}$ 及 $\lambda\in(0,\frac{2}{M})$ 均收敛到 $x^{*}$。
+  \end{proof}
+
+  % 题目8
+  \item 用 Newton 迭代法和割线法求方程 $3x^{2}-e^{x}=0$ 在 $[0,1]$ 上的根
+  \begin{solution}
+    设$f(x)=3x^{2}-e^{x}$,则$f'(x)=6x-e^{x}$\\
+    Newton 迭代法:
+    \[
+    x_{k+1}=x_{k}-\frac{f(x_{k})}{f'(x_{k})}=x_{k}-\frac{3x_{k}^{2}-e^{x_{k}}}{6x_{k}-e^{x_{k}}}
+    \]
+    取初值$x_{0}=0.5$,则有
+    \begin{align*}
+      x_{1}&=1.165\\
+      x_{2}&=0.936\\
+      x_{3}&=0.910\\
+      x_{4}&=0.910
+    \end{align*}
+    割线法:
+    \[
+    x_{k+1}=x_{k}-f(x_{k})\frac{x_{k}-x_{k-1}}{f(x_{k})-f(x_{k-1})}
+    \]
+    取初值$x_{0}=0,x_{1}=1$,则有
+    \begin{align*}
+      x_{2}&=0.780\\
+      x_{3}&=0.903\\
+      x_{4}&=0.910\\
+      x_{5}&=0.910
+    \end{align*}
+  \end{solution}
+
+  % 题目13
+  \item 
+  \begin{enumerate}[label=(\arabic*)]
+    \item 为求 $f(x)=0$ 的根, 用迭代函数 $\varphi(x)=x+f(x)$ 的迭代法不一定收敛. 对此用 Steffensen 迭代法, 试写出迭代公式.
+    \begin{solution}
+      Steffensen 迭代法的迭代公式为
+      \[
+      x_{k+1}=x_{k}-\frac{[f(x_{k})]^{2}}{f(x_{k}+f(x_{k}))-f(x_{k})}
+      \]
+    \end{solution}
+    \item 设$f$有连续的二阶导数 ,$f(x^*)=0,f^\prime(x^*)\neq0$,研究迭代法$$x_{k+1}\:=\:x_{k}\:-\frac{\left[f(\:x_{k}\:)\:\right]^{2}}{f(\:x_{k}\:+f(\:x_{k}\:)\:)\:-f(\:x_{k}\:)}\:,\quad k\:=\:0\:,1\:,\cdots $$的收敛性和收敛阶。
+    \begin{solution}
+      \[
+      \nu (x)=x-\frac{[f(x)]^{2}}{f(x+f(x))-f(x)}
+      \]
+      \[
+      \nu'(x)=1-\left[ \frac{f(x)}{\frac{f(x+f(x))-f(x)}{x+f(x)-x}}\right]'
+      \]
+      \[
+      \lim_{x\to x^{*}}\nu'(x)=1-\lim_{x\to x^{*}}\left[ \frac{f(x)}{\frac{f(x+f(x))-f(x)}{x+f(x)-x}}\right]'=0
+      \]
+      因此迭代法收敛且收敛阶至少为2.
+    \end{solution}
+  \end{enumerate}
+
+
+  % 题目19
+  \item 构造一种不动点迭代法求方程组$$\begin{cases}
+    x_{1}-0.7\sin x_{1}-0.2\cos x_{2}=0 \\
+    x_{2}-0.7\cos x_{1}+0.2\sin x_{2}=0
+  \end{cases}$$在$(0.5,0.5)^T$ 附近的解, 选$x_0=(0.5,0.5)^T$, 迭代至$x^3$或达到$10^{−3}$的精度. 分析方法的收敛性.
+  \begin{solution}
+    由牛顿迭代法可得不动点迭代格式:
+    \[
+    \begin{bmatrix}
+      x_{1}^{k+1} \\
+      x_{2}^{k+1}
+    \end{bmatrix}=
+    \begin{bmatrix}
+      x_{1}^{k} \\
+      x_{2}^{k}
+    \end{bmatrix}-
+    \begin{bmatrix}
+      1-0.7\cos x_{1}^{k} & 0.2\sin x_{2}^{k} \\
+      0.7\sin x_{1}^{k} & 1-0.2\cos x_{2}^{k}
+    \end{bmatrix}^{-1}
+    \begin{bmatrix}
+      x_{1}^{k}-0.7\sin x_{1}^{k}-0.2\cos x_{2}^{k} \\
+      x_{2}^{k}-0.7\cos x_{1}^{k}+0.2\sin x_{2}^{k}
+    \end{bmatrix}
+    \]
+    取初值$x_{0}=(0.5,0.5)^{T}$,则有
+    \begin{align*}
+      x^{1}&=\begin{bmatrix}
+        0.525880696\\
+        0.511810035
+      \end{bmatrix}\\
+      x^{2}&=\begin{bmatrix}
+        0.526982887\\
+        0.506079826
+      \end{bmatrix}\\
+      x^{3}&=\begin{bmatrix}
+        0.526309687\\
+        0.508790639
+      \end{bmatrix}
+    \end{align*}
+    由于在点$(0.5,0.5)^T$处
+    \[
+    J=\begin{bmatrix}
+      0.3948 & 0.3518\\
+      ​0.0973 & 0.8252​
+    \end{bmatrix}
+    \]
+    且$\|J\|_{\infty}=0.2916<1$,所以该迭代格式在$(0.5,0.5)^T$附近收敛.
+  \end{solution}
+\end{enumerate}
+\end{document}
+
+%%% Local Variables:
+%%% mode: late\rvx
+%%% TeX-master: t
+%%% End:
