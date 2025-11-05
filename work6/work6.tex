@@ -1,0 +1,130 @@
+% Homework template for Inference and Information
+% UPDATE: September 26, 2017 by Xiangxiang
+\documentclass[a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{ctex}
+\ctexset{
+proofname = \heiti{证明}
+}
+\usepackage{amsmath, amssymb, amsthm}
+% amsmath: equation*, amssymb: mathbb, amsthm: proof
+\usepackage{extarrows}
+\usepackage{moreenum}
+\usepackage{mathtools}
+\usepackage{url}
+\usepackage{bm}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{booktabs} % toprule
+\usepackage[mathcal]{eucal}
+\usepackage[thehwcnt = 6]{iidef} % 作业编号
+% \everymath{\displaystyle}
+
+
+\thecourseinstitute{清华大学机械工程系}
+\thecoursename{数值分析A}
+\theterm{2025年秋季学期}
+\hwname{作业}
+\slname{\heiti{解}}
+\begin{document}
+\courseheader
+\name{代卓远2025210205}
+
+\begin{enumerate}
+  \setlength{\itemsep}{4\parskip}
+
+  % 题目20(2)
+  \item 用Newton迭代法和逆Broyden迭代法解$$\begin{cases}x^2+y^2=4\:,\\x^2-y^2=1\:,\end{cases}x^0=(1.6,1.2)^\mathrm{T}$$
+  \begin{solution}
+    1. Newton迭代法:
+    设
+    \[
+    F(x)=
+    \begin{bmatrix}
+      x^2+y^2-4\\
+      x^2-y^2-1
+    \end{bmatrix},\quad F'(x)=
+    \begin{bmatrix}
+      2x&2y\\
+      2x&-2y
+    \end{bmatrix}
+    \]
+    则
+    \[
+    \begin{bmatrix}
+      x^{k+1}\\
+      y^{k+1}
+    \end{bmatrix}=
+    \begin{bmatrix}
+      x^k\\
+      y^k
+    \end{bmatrix}-F(x^k)^{-1}F(x^k)
+    \]
+    得
+    \begin{align*}
+    \begin{bmatrix}x^1\\y^1\end{bmatrix}&=\begin{bmatrix}1.5811\\1.2247\end{bmatrix}
+    \end{align*}
+    2. 逆Broyden迭代法:
+    \[
+    F(x^0)=
+    \begin{bmatrix}
+      0\\
+      0.12
+    \end{bmatrix}
+    \]
+    \[
+    B_0=F(x^0)^{-1}=
+    \begin{bmatrix}
+      0.15625&0.15625\\
+      0.20833&-0.20833
+    \end{bmatrix}
+    \]
+    \[
+    x^{k+1}=x^k-B_kF(x^k)
+    \]
+    \[
+    B_{k+1}=B_k+\frac{(p^k-B_k q^k)(p^k)^\mathrm{T}B_k}{(p^k)^\mathrm{T}B_kq^k}
+    \]
+    其中$p^k=x^{k+1}-x^k,q^k=F(x^{k+1})-F(x^k)$.
+    得
+    \begin{align*}
+    x^1=
+    \begin{bmatrix}
+      1.5812\\
+      1.2250
+    \end{bmatrix},\quad x^2=
+    \begin{bmatrix}
+      1.5811\\
+      1.2247
+    \end{bmatrix}
+    \end{align*}
+  \end{solution}
+
+  % 题目2
+  \item 利用Gershgorin定理估计$\text{cond}(A)_2$的上界$$A = \begin{bmatrix} 5.2 & 0.6 & 2.2 \\ 0.6 & 0.4 & 0.5 \\ 2.2 & 0.5 & 4.7 \end{bmatrix}$$
+  \begin{solution}
+    由Gershgorin定理,矩阵$A$的特征值落在以下圆盘中:
+    \begin{align*}
+      D_1:|z-5.2|\leq 2.8,\quad D_2:|z-0.4|\leq 1.1,\quad D_3:|z-4.7|\leq 2.7\\
+      \Rightarrow \sigma(A)\subseteq [-0.7,1.5] \cup [2,8]
+    \end{align*}
+    因此，$\text{cond}(A)_2=\frac{|\lambda_{\max}|}{|\lambda_{\min}|}\leq \frac{8}{0.7}\approx 11.43$.
+  \end{solution}
+
+
+  % 题目6
+  \item 用逆幂迭代法求矩阵$A=\begin{bmatrix}6&2&1\\2&3&1\\1&1&1\end{bmatrix}$最接近2的特征值及对应的特征向量，结果准确到$10^{-3}.$
+  \begin{solution}
+    
+  \end{solution}
+
+  % 题目9
+  \item 设$A$有实特征值$\lambda _1> \lambda _2\geq \lambda _3\geq \cdots \geq \lambda _{n- 1}\geq \lambda _n$,求$\lambda_1$的原点位移的幂迭代法引人参数$\alpha$,对 $B=A-\alpha I$作幂迭代.试证明这样的迭代当取$\displaystyle \alpha=\frac{\lambda_2+\lambda_n}2$时收敛最快
+\end{enumerate}
+\end{document}
+
+%%% Local Variables:
+%%% mode: late\rvx
+%%% TeX-master: t
+%%% End:
