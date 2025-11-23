@@ -1,10 +1,10 @@
-This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2025.6.2)  6 NOV 2025 17:09
+This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2025.6.2)  14 NOV 2025 15:31
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**work6
-(./work6.tex
+**work7
+(./work7.tex
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
 (d:/texlive/2024/texmf-dist/tex/latex/base/article.cls
@@ -479,8 +479,8 @@ Package: fancyhdr 2022/11/09 v4.1 Extensive control of page headers and footers
 \f@nch@O@erf=\skip76
 \f@nch@O@olf=\skip77
 \f@nch@O@orf=\skip78
-)) (./work6.aux)
-\openout1 = `work6.aux'.
+)) (./work7.aux)
+\openout1 = `work7.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 30.
 LaTeX Font Info:    ... okay on input line 30.
@@ -639,7 +639,7 @@ LaTeX Font Warning: Font shape `TU/SimHei(0)/m/it' undefined
 
 [1
 
-] [2] (./work6.aux)
+] [2] [3] [4] (./work7.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2022/07/14>
@@ -650,12 +650,12 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 13101 strings out of 474773
- 299282 string characters out of 5761290
- 1935842 words of memory out of 5000000
- 35027 multiletter control sequences out of 15000+600000
+ 13114 strings out of 474773
+ 300110 string characters out of 5761290
+ 1940842 words of memory out of 5000000
+ 35040 multiletter control sequences out of 15000+600000
  565507 words of font info for 84 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 93i,14n,131p,524b,480s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 93i,13n,131p,524b,729s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on work6.pdf (2 pages).
+Output written on work7.pdf (4 pages).

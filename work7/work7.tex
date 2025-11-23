@@ -1,0 +1,285 @@
+% Homework template for Inference and Information
+% UPDATE: September 26, 2017 by Xiangxiang
+\documentclass[a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{ctex}
+\ctexset{
+proofname = \heiti{证明}
+}
+\usepackage{amsmath, amssymb, amsthm}
+% amsmath: equation*, amssymb: mathbb, amsthm: proof
+\usepackage{extarrows}
+\usepackage{moreenum}
+\usepackage{mathtools}
+\usepackage{url}
+\usepackage{bm}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{booktabs} % toprule
+\usepackage[mathcal]{eucal}
+\usepackage[thehwcnt = 7]{iidef} % 作业编号
+\everymath{\displaystyle}
+
+
+\thecourseinstitute{清华大学机械工程系}
+\thecoursename{数值分析A}
+\theterm{2025年秋季学期}
+\hwname{作业}
+\slname{\heiti{解}}
+\begin{document}
+\courseheader
+\name{代卓远2025210205}
+
+\begin{enumerate}
+  \setlength{\itemsep}{4\parskip}
+
+  % 题目4
+  \item 作$A=\begin{bmatrix}1&1&1\\2&-1&-1\\2&-4&5\end{bmatrix}$的QR分解
+  \begin{solution}
+    用构建Householder矩阵的方法:
+    设$A$的列向量为$\bm{a}_1,\bm{a}_2,\bm{a}_3$,则
+    \[
+      \bm{a}_1=\begin{bmatrix}1\\2\\2\end{bmatrix},\quad \|\bm{a}_1\|_2=\sqrt{9}=3
+    \]
+    取$\bm{u}_1=\bm{a}_1-3\bm{e}_1=\begin{bmatrix}-2\\2\\2\end{bmatrix}$,则
+    \[
+      P_1=I-\frac{2}{\bm{u}_1^T\bm{u}_1}\bm{u}_1\bm{u}_1^T=\begin{bmatrix}
+        -\frac{1}{3} & \frac{2}{3} & \frac{2}{3} \\
+        \frac{2}{3} & \frac{1}{3} & -\frac{2}{3} \\
+        \frac{2}{3} & -\frac{2}{3} & \frac{1}{3}
+      \end{bmatrix}
+    \]
+    计算$P_1A$:
+    \[
+      P_1A=\begin{bmatrix}
+        3 & -3 & 3 \\
+        0 & 3 & -3 \\
+        0 & 0 & 3
+      \end{bmatrix}
+    \]
+    此时已是上三角矩阵,故$R=P_1A$, $Q=P_1^T=P_1$.    
+  \end{solution}
+
+  % 题目11
+  \item 用正交相似变换化下列矩阵为上Hessenberg矩阵:
+  \begin{enumerate}[label=(\arabic*)]
+    \item $\begin{bmatrix} 2 & -1 & 3 \\ 2 & 0 & 1 \\ -2 & 1 & 4 \end{bmatrix}$;
+    \begin{solution}
+      构造Householder矩阵:
+      设$A$的列向量为$\bm{a}_1,\bm{a}_2,\bm{a}_3$,则
+      \[
+        \bm{a}_1^{(1)}=\begin{bmatrix}a_{21}\\a_{31}\end{bmatrix},=\begin{bmatrix}2\\-2\end{bmatrix},\quad \|\bm{a}_1\|_2=2\sqrt{2}
+      \]
+      取$\bm{u}_1=\bm{a}_1^{(1)}-2\sqrt{2}\bm{e}_1=\begin{bmatrix}2-2\sqrt{2}\\-2\end{bmatrix}$,则
+      \[
+        \overline{P}_1 =I-\frac{2}{\bm{u}_1^T\bm{u}_1}\bm{u}_1\bm{u}_1^T=\begin{bmatrix}
+          \frac{\sqrt{2}}{2} & -\frac{\sqrt{2}}{2} \\
+          -\frac{\sqrt{2}}{2} & -\frac{\sqrt{2}}{2} \\
+        \end{bmatrix}
+      \]
+      则$P_1=\begin{bmatrix}
+        1 & 0 \\
+        0 & \overline{P}_1 \\
+      \end{bmatrix}$
+      \[
+      A^{(2)}=P_1AP_1=\begin{bmatrix}
+        2 & -2\sqrt{2} & -\sqrt{2} \\
+        -2\sqrt{2} & 1 & 2 \\
+        0 & 2 & 3 \\
+      \end{bmatrix}
+      \]
+    \end{solution}
+    \item $\begin{bmatrix} 4 & 1 & -2 & 2 \\ 1 & 2 & 0 & 1 \\ -2 & 0 & 3 & -2 \\ 2 & 1 & -2 & 1 \end{bmatrix}$.
+    \begin{solution}
+      构造Householder矩阵:
+      设$A$的列向量为$\bm{a}_1,\bm{a}_2,\bm{a}_3,\bm{a}_4$,则
+      \[
+        \bm{a}_1^{(1)}=\begin{bmatrix}a_{21}\\a_{31}\\a_{41}\end{bmatrix},=\begin{bmatrix}1\\-2\\2\end{bmatrix},\quad \|\bm{a}_1\|_2=3
+      \]
+      取$\bm{u}_1=\bm{a}_1^{(1)}-3\bm{e}_1=\begin{bmatrix}-2\\-2\\2\end{bmatrix}$,则
+      \[
+        \overline{P}_1 =I-\frac{2}{\bm{u}_1^T\bm{u}_1}\bm{u}_1\bm{u}_1^T=\begin{bmatrix}
+        \frac{1}{3} & -\frac{2}{3} & \frac{2}{3} \\
+        -\frac{2}{3} & \frac{1}{3} & \frac{2}{3} \\
+        \frac{2}{3} & \frac{2}{3} & \frac{1}{3}
+      \end{bmatrix}
+      \]
+      则$P_1=\begin{bmatrix}
+        1 & 0 \\
+        0 & \overline{P}_1 \\
+      \end{bmatrix}$
+      \[
+      A^{(2)}=P_1AP_1=\begin{bmatrix}
+        4 & 3 & 0 & 0 \\
+        3 & \frac{38}{9} & -\frac{4}{9} & -\frac{5}{9} \\
+        0 & -\frac{4}{9} & -\frac{1}{9} & -\frac{8}{9} \\
+        0 & -\frac{5}{9} & -\frac{8}{9} & \frac{17}{9} \\
+      \end{bmatrix}
+      \]
+      \[
+      a_2^{(2)}=\begin{bmatrix}a_{32}^{(2)}\\a_{42}^{(2)}\end{bmatrix}=\begin{bmatrix}-\frac{4}{9}\\-\frac{5}{9}\end{bmatrix},\quad \|a_2^{(2)}\|_2=\frac{\sqrt{41}}{9}
+      \]
+      取$\bm{u}_2=\bm{a}_2^{(2)}-\frac{13}{9}\bm{e}_1=\begin{bmatrix}-\frac{4-\sqrt{41}}{9}\\-\frac{5}{9}\end{bmatrix}$,则
+      \[
+        \overline{P}_2
+        = I_2-\frac{2}{\bm{u}_2^T\bm{u}_2}\bm{u}_2\bm{u}_2^T
+        = \frac1{\sqrt{41}}
+        \begin{bmatrix}
+        -4 & -5\\
+        -5 & 4
+        \end{bmatrix}.
+      \]
+      则$P_2=\begin{bmatrix}
+        I_2 & 0 \\
+        0 & \overline{P}_2 \\
+      \end{bmatrix}$
+      \[
+      A^{(3)}=P_2A^{(2)}P_2=\begin{bmatrix}
+        4 & 3 & 0 & 0\\
+        3 & \frac{38}{9} & \frac{\sqrt{41}}{9} & 0\\
+        0 & \frac{\sqrt{41}}{9} & \frac{89}{369} & -\dfrac{48}{41}\\
+        0 & 0 & -\frac{48}{41} & \frac{63}{41}
+      \end{bmatrix}.
+      \]
+      $A^{(3)}$即为所求的上Hessenberg矩阵.
+    \end{solution}
+  \end{enumerate}
+
+
+
+  % 题目13(1)
+  \item 设$A=\begin{bmatrix}2&\varepsilon\\\varepsilon&1\end{bmatrix}$, 试计算一步QR迭代. 用基本QR算法.
+  \begin{solution}
+  对 $A_1$ 做 QR 分解
+
+  取第一列
+  \[
+    a_1 = \begin{bmatrix}2 \\ \varepsilon\end{bmatrix}, 
+    \qquad \|a_1\| = \sqrt{4+\varepsilon^2} =: s.
+  \]
+  定义
+  \[
+    q_1 = \frac{1}{s}\begin{bmatrix}2 \\ \varepsilon\end{bmatrix}.
+  \]
+  取与 $q_1$ 正交的单位向量
+  \[
+    q_2 = \frac{1}{s}\begin{bmatrix}-\varepsilon \\ 2\end{bmatrix},
+  \]
+  \[
+    Q_1 = Q = \frac{1}{s}
+    \begin{bmatrix}
+      2 & -\varepsilon \\
+      \varepsilon & 2
+    \end{bmatrix}.
+  \]
+
+  由 $R_1 = Q_1^{T}A_1$ 得
+  \[
+    Q^{T} = \frac{1}{s}
+    \begin{bmatrix}
+      2 & \varepsilon \\
+      -\varepsilon & 2
+    \end{bmatrix},
+  \]
+  因此
+  \[
+    R_1 = R = Q^{T}A
+    =
+    \frac{1}{s}
+    \begin{bmatrix}
+      2 & \varepsilon \\
+      -\varepsilon & 2
+    \end{bmatrix}
+    \begin{bmatrix}
+      2 & \varepsilon \\
+      \varepsilon & 1
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+      s & \dfrac{3\varepsilon}{s} \\
+      0 & \dfrac{2-\varepsilon^2}{s}
+    \end{bmatrix},
+  \]
+  其中 $s=\sqrt{4+\varepsilon^2}$。
+  \[
+    A_2 = RQ
+    =
+    \begin{bmatrix}
+      s & \dfrac{3\varepsilon}{s} \\
+      0 & \dfrac{2-\varepsilon^2}{s}
+    \end{bmatrix}
+    \cdot
+    \frac{1}{s}
+    \begin{bmatrix}
+      2 & -\varepsilon \\
+      \varepsilon & 2
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+      \dfrac{5\varepsilon^2 + 8}{\varepsilon^2 + 4} &
+      \dfrac{\varepsilon(2 - \varepsilon^2)}{\varepsilon^2 + 4} \\[0.6em]
+      \dfrac{\varepsilon(2 - \varepsilon^2)}{\varepsilon^2 + 4} &
+      \dfrac{2(2 - \varepsilon^2)}{\varepsilon^2 + 4}
+    \end{bmatrix}.
+  \]
+\end{solution}
+
+
+  % 题目2
+  \item 2. 设$f(x)=3x\mathrm{e}^x-2\mathrm{e}^x$,取 $x_0=1.0,x_1=1.05,x_2=1.07$,构造二次 Lagrange 插值多项式$L_2$, 并计算$f(1.03)$的近似值. 给出实际计算误差及估计误差界.
+  \begin{solution}
+    插值节点为
+    \begin{align*}
+      &f(x_0)=3\cdot1\cdot \mathrm{e}^1-2\mathrm{e}^1\approx2.71828,\quad
+      f(x_1)=3\cdot1.05\cdot \mathrm{e}^{1.05}-2\mathrm{e}^{1.05}=3.28630,\\
+      &f(x_2)=3\cdot1.07\cdot \mathrm{e}^{1.07}-2\mathrm{e}^{1.07}=3.52761.
+    \end{align*}
+    则二次Lagrange插值多项式为
+    \begin{align*}
+      L_2(x)=&2.71828\cdot\frac{(x-1.05)(x-1.07)}{(1.0-1.05)(1.0-1.07)}
+      +3.28630\cdot\frac{(x-1.0)(x-1.07)}{(1.05-1.0)(1.05-1.07)}\\
+      &+3.52761\cdot\frac{(x-1.0)(x-1.05)}{(1.07-1.0)(1.07-1.05)}
+    \end{align*}
+    \[
+      \Rightarrow L_2(1.03)\approx3.0525.
+    \]
+    计算误差
+    \[
+      R_2(1.03)=f(1.03)-3.0525\approx0.000114
+    \]
+    估计误差界:
+    \begin{align*}
+    h = \max\{|1.05-1.0|,|1.07-1.05|\}=0.05\\
+    \|f-L_n\|_{\infty}\leqslant\frac{h^{n+1}}{4(n+1)}\|f^{(n+1)}\|_{\infty}=\frac{0.05^3}{12}\max_{x\in[1,1.07]}|f^{(3)}(x)|\approx0.0007
+    \end{align*}
+  \end{solution}
+
+  % 题目6
+  \item 给定数据$$\begin{array}{|c|c|c|c|c|} \hline x & 1 & 1.5 & 0 & 2 \\ \hline f(x) & 3 & 3.25 & 3 & 5/3 \\ \hline \end{array}$$试构造出$f$的均差表和三次Newton插值多项式，并写出均差型余项.
+  \begin{solution}
+    \[
+      \begin{array}{|c|c|c|c|c|} \hline
+        x & 1 & 1.5 & 0 & 2 \\ \hline
+        f[x_i] & 3 & 3.25 & 3 & 5/3 \\ \hline
+        f[x_i,x_{i+1}] & 0.5 & -0.5 & -\frac{2}{3} \\ \hline
+        f[x_i,x_{i+1},x_{i+2}] & 1 & -\frac{2}{3} \\ \hline
+        f[x_i,x_{i+1},x_{i+2},x_{i+3}] & -\frac{5}{3} \\ \hline
+      \end{array}
+    \]
+    则三次Newton插值多项式为
+    \[
+      N_3(x)=3+0.5(x-1)+1(x-1)(x-1.5)-\frac{5}{3}(x-1)(x-1.5)x
+    \]
+    均差型余项为
+    \[
+      R_3(x)=f[x_0,x_1,x_2,x_3,x]\cdot(x-1)(x-1.5)x(x-2)
+    \]
+  \end{solution}
+\end{enumerate}
+\end{document}
+
+%%% Local Variables:
+%%% mode: late\rvx
+%%% TeX-master: t
+%%% End:
