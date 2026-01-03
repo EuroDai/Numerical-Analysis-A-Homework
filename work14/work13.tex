@@ -1,0 +1,78 @@
+% Homework template for Inference and Information
+% UPDATE: September 26, 2017 by Xiangxiang
+\documentclass[a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{ctex}
+\ctexset{
+proofname = \heiti{证明}
+}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathrsfs}
+% amsmath: equation*, amssymb: mathbb, amsthm: proof
+\usepackage{extarrows}
+\usepackage{moreenum}
+\usepackage{mathtools}
+\usepackage{url}
+\usepackage{bm}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{booktabs} % toprule
+\usepackage[mathcal]{eucal}
+\usepackage[thehwcnt = 14]{iidef} % 作业编号
+\everymath{\displaystyle}
+
+
+\thecourseinstitute{清华大学机械工程系}
+\thecoursename{数值分析A}
+\theterm{2025年秋季学期}
+\hwname{作业}
+\slname{\heiti{解}}
+\begin{document}
+\courseheader
+\name{代卓远2025210205}
+
+\begin{enumerate}
+  \setlength{\itemsep}{4\parskip}
+
+  % 题目12
+  \item 试推导Hamming公式$$y_{n+3} = \frac{1}{8}(9y_{n+2} - y_{n}) + \frac{3}{8}h[f(x_{n+3}, y_{n+3}) + 2f(x_{n+2}, y_{n+2}) - f(x_{n+1}, y_{n+1})]$$的局部截断误差主项.
+  \begin{solution}
+
+  \end{solution}
+
+  % 题目13
+  \item 试用数值积分方法直接推导二步方法$$y_{n+2}-y_{n+1}=\frac{h}{12}[5f(x_{n+2},y_{n+2})+8f(x_{n+1},y_{n+1})-f(x_{n},y_{n})].$$
+  \begin{solution}
+
+  \end{solution}
+
+
+
+  % 题目15
+  \item 证明线性二步法$$y_{n+2}+(b-1)y_{n+1}-by_{n}=\frac{1}{4}h[(b+3)f(x_{n+2},y_{n+2})+(3b+1)f(x_{n},y_{n})]$$当$b\neq-1$时是二阶的 ,当$b=-1$时是三阶的
+  \begin{solution}
+    
+  \end{solution}
+
+
+
+  % 题目17
+  \item 讨论线性多步法$$y_{n+3}+\frac{1}{4}y_{n+2}-\frac{1}{2}y_{n+1}-\frac{3}{4}y_{n}=\frac{1}{8}h[19f(x_{n+2},y_{n+2})+5f(x_{n},y_{n})]$$的收敛性。
+  \begin{solution}
+
+  \end{solution}
+
+  % 题目20
+  \item 试证明隐式 Euler 方法是 A-稳定的.
+  \begin{solution}
+
+  \end{solution}
+
+\end{enumerate}
+\end{document}
+
+%%% Local Variables:
+%%% mode: late\rvx
+%%% TeX-master: t
+%%% End:

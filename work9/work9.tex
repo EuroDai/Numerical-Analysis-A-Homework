@@ -1,0 +1,160 @@
+% Homework template for Inference and Information
+% UPDATE: September 26, 2017 by Xiangxiang
+\documentclass[a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{ctex}
+\ctexset{
+proofname = \heiti{证明}
+}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathrsfs}
+% amsmath: equation*, amssymb: mathbb, amsthm: proof
+\usepackage{extarrows}
+\usepackage{moreenum}
+\usepackage{mathtools}
+\usepackage{url}
+\usepackage{bm}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{booktabs} % toprule
+\usepackage[mathcal]{eucal}
+\usepackage[thehwcnt = 9]{iidef} % 作业编号
+\everymath{\displaystyle}
+
+
+\thecourseinstitute{清华大学机械工程系}
+\thecoursename{数值分析A}
+\theterm{2025年秋季学期}
+\hwname{作业}
+\slname{\heiti{解}}
+\begin{document}
+\courseheader
+\name{代卓远2025210205}
+
+\begin{enumerate}
+  \setlength{\itemsep}{4\parskip}
+
+  % 题目1
+  \item 设$[a,b] = [-1,1]$，$\rho(x) \equiv 1$，$P_0(x) \equiv 1$，试用Gram-Schmidt方法计算$P_1$，$P_2$，$P_3$
+  \begin{solution}
+    \[
+      P_1(x) = x - \frac{(x, P_0)}{(P_0, P_0)} P_0 = x - \frac{\int_{-1}^1 x \cdot 1 \, dx}{\int_{-1}^1 1^2 \, dx} \cdot 1 = x - 0 = x
+    \]
+    \begin{align*}
+      P_2(x) = x^2 - \frac{(x^2, P_0)}{(P_0, P_0)} P_0 - \frac{(x^2, P_1)}{(P_1, P_1)} P_1&= x^2 - \frac{\int_{-1}^1 x^2 \cdot 1 \, dx}{\int_{-1}^1 1^2 \, dx} \cdot 1 - \frac{\int_{-1}^1 x^2 \cdot x \, dx}{\int_{-1}^1 x^2 \, dx} \cdot x\\
+      &= x^2 - \frac{\frac{2}{3}}{2} - 0 = x^2 - \frac{1}{3}
+    \end{align*}
+    \begin{align*}
+      P_3(x) &= x^3 - \frac{(x^3, P_0)}{(P_0, P_0)} P_0 - \frac{(x^3, P_1)}{(P_1, P_1)} P_1 - \frac{(x^3, P_2)}{(P_2, P_2)} P_2\\
+      &= x^3 - \frac{\int_{-1}^1 x^3 \cdot 1 \, dx}{\int_{-1}^1 1^2 \, dx} \cdot 1 - \frac{\int_{-1}^1 x^3 \cdot x \, dx}{\int_{-1}^1 x^2 \, dx} \cdot x - \frac{\int_{-1}^1 x^3 (x^2 - \frac{1}{3}) \, dx}{\int_{-1}^1 (x^2 - \frac{1}{3})^2 \, dx} (x^2 - \frac{1}{3})\\
+      &= x^3 - 0 - \frac{\frac{2}{5}}{\frac{2}{3}} x - 0 = x^3 - \frac{3}{5} x
+    \end{align*}
+  \end{solution}
+
+  % 题目2
+  \item 设区间$[0,+\infty)$上权函数$\rho(x)=\mathrm{e}^{-x}$, 其正交多项式为Laguerre多项式，已知$L_0(x)\equiv1$, 试用Gram-Schmidt方法计算$L_1$, 并用递推关系式计算出$L_2$及$L_3.$
+  \begin{solution}
+    \[
+      L_1(x) = x - \frac{(x, L_0)}{(L_0, L_0)} L_0 = x - \frac{\int_0^{+\infty} x e^{-x} \, dx}{\int_0^{+\infty} e^{-x} \, dx} \cdot 1 = x - 1
+    \]
+    递推关系式为
+    \[
+      L_{n+1}(x)=(1+2n-x)L_n(x)-n^2L_{n-1}(x)
+    \]
+    则
+    \[
+      L_2(x) = (1 + 2 - x)L_1(x) - 1^2 L_0(x) = (3 - x)(x - 1) - 1 = -x^2 + 4x - 4
+    \] 
+    \[
+      L_3(x) = (1 + 4 - x)L_2(x) - 2^2 L_1(x) = (5 - x)(-x^2 + 4x - 4) - 4(x - 1) = x^3 - 9x^2 + 20x - 16
+    \]
+  \end{solution}
+
+  % 题目5
+  \item 用Chebyshev多项式$T_3$的零点在[-1,1]上对函数$f(x)=\ln(2+x)$构造二次Lagrange插值项式并估计其误差界.
+  \begin{solution}
+    $T_3$的零点为
+    \[
+      x_k = \cos\frac{（2k-1）\pi}{6} \pi, \quad k=1,2,3
+    \]
+    即
+    \[
+      x_1 = \frac{\sqrt{3}}{2}, \quad x_2 = 0, \quad x_3 = -\frac{\sqrt{3}}{2}
+    \]
+    则$f(x_1)=\ln(2+\frac{\sqrt{3}}{2})=1.05293$, $f(x_2)=\ln 2=0.69315$, $f(x_3)=\ln(2-\frac{\sqrt{3}}{2})=0.12573$，插值多项式为
+    \begin{align*}
+      L_2(x) &= f(x_1) \frac{(x - x_2)(x - x_3)}{(x_1 - x_2)(x_1 - x_3)} + f(x_2) \frac{(x - x_1)(x - x_3)}{(x_2 - x_1)(x_2 - x_3)} + f(x_3) \frac{(x - x_1)(x - x_2)}{(x_3 - x_1)(x_3 - x_2)} \\
+      &= 1.05293 \frac{(x - 0)(x + \frac{\sqrt{3}}{2})}{(\frac{\sqrt{3}}{2} - 0)(\frac{\sqrt{3}}{2} + \frac{\sqrt{3}}{2})} + 0.69315 \frac{(x - \frac{\sqrt{3}}{2})(x + \frac{\sqrt{3}}{2})}{(0 - \frac{\sqrt{3}}{2})(0 + \frac{\sqrt{3}}{2})} + 0.12573 \frac{(x - \frac{\sqrt{3}}{2})(x - 0)}{(-\frac{\sqrt{3}}{2} - \frac{\sqrt{3}}{2})(-\frac{\sqrt{3}}{2} - 0)} \\
+      &\approx 0.69315+0.53532x-0.13843x^2
+      \end{align*}
+      误差界为
+      \[
+        \|f-L_n\|_{\infty}\leqslant\frac{h^{n+1}}{4(n+1)}\|f^{(n+1)}\|_{\infty}=\frac{h^{3}}{12}\|f^{(3)}\|_{\infty}\approx 0.1083
+      \]
+  \end{solution}
+
+  % 题目6
+  \item 设$T_{n}$是 $n$ 次 Chebyshev 多项式, 令 $T_{n}^{*}(x)=T_{n}(2x-1)$, $x\in [0,1]$, 试证明 $\{T_{n}^{*}\}$是[0, 1]上权函数$\rho(x)=\frac{1}{\sqrt{x-x^{2}}}$的正交多项式.
+  \begin{solution}
+    \[
+      T_{n}^{*}(x) = T_n(2x - 1)= \cos(n \arccos(2x - 1))
+    \]
+    则
+    \begin{align*}
+      \int_0^1 T_n^*(x) T_m^*(x) \rho(x) \, dx &= \int_0^1 \cos(n \arccos(2x - 1)) \cos(m \arccos(2x - 1)) \frac{1}{\sqrt{x - x^2}} \, dx \\
+      &\xlongequal{t = 2x - 1} \frac{1}{2} \int_{-1}^1 \cos(n \arccos t) \cos(m \arccos t) \frac{1}{\sqrt{\frac{t + 1}{2} - (\frac{t + 1}{2})^2}} \, dt \\
+      &= \int_{-1}^1 \cos(n \arccos t) \cos(m \arccos t) \frac{1}{\sqrt{1 - t^2}} \, dt
+    \end{align*}
+    由于Chebyshev多项式$T_n$在$[-1,1]$上关于权函数$\rho(t) = \frac{1}{\sqrt{1 - t^2}}$正交，因此$\{T_n^*\}$在$[0,1]$上关于权函数$\rho(x) = \frac{1}{\sqrt{x - x^2}}$正交。
+  \end{solution}
+
+  % 题目8
+  \item 设$f(x) = x\ln x$, $x \in [1, 3]$, 试求出$f$在$\mathscr{P}_1$和$\mathscr{P}_2$中的最佳平方逼近多项式$P_1^*$和$P_2^*$。
+  \begin{solution}
+    在$\mathscr{P}_1$中，设$P_1^*(x) = a_0 + a_1 x$，则
+    \[
+      \begin{cases}
+        (f - P_1^*, 1) = 0 \\
+        (f - P_1^*, x) = 0
+      \end{cases}
+      \Rightarrow
+      \begin{cases}
+        \int_1^3 (x \ln x - a_0 - a_1 x) \, dx = 0 \\
+        \int_1^3 (x \ln x - a_0 - a_1 x) x \, dx = 0
+      \end{cases}
+    \]
+    解得$a_0 = \frac{9}{4}\ln 3 - \frac{13}{3}$，$a_1 = \frac{5}{3}.$，则
+    \[
+      P_1^*(x) = \left(\frac{9}{4}\ln 3 - \frac{13}{3}\right) + \frac{5}{3} x
+    \]
+    在$\mathscr{P}_2$中，设$P_2^*(x) = b_0 + b_1 x + b_2 x^2$，则
+    \[
+      \begin{cases}
+        (f - P_2^*, 1) = 0 \\
+        (f - P_2^*, x) = 0 \\
+        (f - P_2^*, x^2) = 0
+      \end{cases}
+      \Rightarrow
+      \begin{cases}
+        \int_1^3 (x \ln x - b_0 - b_1 x - b_2 x^2) \, dx = 0 \\
+        \int_1^3 (x \ln x - b_0 - b_1 x - b_2 x^2) x \, dx = 0 \\
+        \int_1^3 (x \ln x - b_0 - b_1 x - b_2 x^2) x^2 \, dx = 0
+      \end{cases}
+    \]
+    解得$\begin{cases}
+b_0 &= \frac{567}{32}\ln 3 - \frac{163}{8},\\
+b_1 &= \frac{115}{6} - \frac{135}{8}\ln 3,\\
+b_2 &= \frac{135}{32}\ln 3 - \frac{35}{8}.
+\end{cases}$，则
+    \[
+      P_2^*(x) = \left(\frac{567}{32}\ln 3 - \frac{163}{8}\right) + \left(\frac{115}{6} - \frac{135}{8}\ln 3\right) x + \left(\frac{135}{32}\ln 3 - \frac{35}{8}\right) x^2
+    \]
+  \end{solution}
+\end{enumerate}
+\end{document}
+
+%%% Local Variables:
+%%% mode: late\rvx
+%%% TeX-master: t
+%%% End:

@@ -1,0 +1,285 @@
+% Homework template for Inference and Information
+% UPDATE: September 26, 2017 by Xiangxiang
+\documentclass[a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{ctex}
+\ctexset{
+proofname = \heiti{证明}
+}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathrsfs}
+% amsmath: equation*, amssymb: mathbb, amsthm: proof
+\usepackage{extarrows}
+\usepackage{moreenum}
+\usepackage{mathtools}
+\usepackage{url}
+\usepackage{bm}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{booktabs} % toprule
+\usepackage[mathcal]{eucal}
+\usepackage[thehwcnt = 13]{iidef} % 作业编号
+\everymath{\displaystyle}
+
+
+\thecourseinstitute{清华大学机械工程系}
+\thecoursename{数值分析A}
+\theterm{2025年秋季学期}
+\hwname{作业}
+\slname{\heiti{解}}
+\begin{document}
+\courseheader
+\name{代卓远2025210205}
+
+\begin{enumerate}
+  \setlength{\itemsep}{4\parskip}
+
+  % 题目3
+  \item 用梯形方法解初值问题$$\left\{
+  \begin{array}{l}
+  y^{\prime}=\mathrm{e}^{x} \sin (x y), \quad x \in[0,1], \\
+  y(0)=1 .
+  \end{array}
+  \right.$$若迭代初值为 $y_{n+1}^{(0)}=y_{n}+h f\left(x_{n}, y_{n}\right)$, 试选取步长 $h$ 使迭代格式
+  $$y_{n+1}^{(s+1)}=y_{n}+\frac{h}{2}\left[f\left(x_{n}, y_{n}\right)+f\left(x_{n+1}, y_{n+1}^{(s)}\right)\right], \quad s=0,1, \cdots$$是收敛的.
+  \begin{solution}
+对任意 $n\ge0$，设 $y_{n+1}$ 为方程
+\[
+y_{n+1}=y_n+\frac{h}{2}\Bigl[f(x_n,y_n)+f(x_{n+1},y_{n+1})\Bigr]
+\]
+的解。与上式相减得
+\[
+y_{n+1}^{(s+1)}-y_{n+1}=\frac{h}{2}\Bigl[f(x_{n+1},y_{n+1}^{(s)})-f(x_{n+1},y_{n+1})\Bigr].
+\]
+由微分中值定理，存在 $\xi_{n+1}^{(s)}$ 介于 $y_{n+1}^{(s)}$ 与 $y_{n+1}$ 之间，使
+\[
+f(x_{n+1},y_{n+1}^{(s)})-f(x_{n+1},y_{n+1})
+=f_y(x_{n+1},\xi_{n+1}^{(s)})(y_{n+1}^{(s)}-y_{n+1}),
+\]
+\[
+\bigl|y_{n+1}^{(s+1)}-y_{n+1}\bigr|
+=\frac{h}{2}\bigl|f_y(x_{n+1},\xi_{n+1}^{(s)})\bigr|\ \bigl|y_{n+1}^{(s)}-y_{n+1}\bigr|
+\le \frac{hL}{2}\bigl|y_{n+1}^{(s)}-y_{n+1}\bigr|.
+\]
+可得
+\[
+\bigl|y_{n+1}^{(s+1)}-y_{n+1}\bigr|
+\le \left(\frac{hL}{2}\right)^{s+1}\bigl|y_{n+1}^{(0)}-y_{n+1}\bigr|.
+\]
+当 $0<\frac{hL}{2}<1$ 时，令 $s\to\infty$ 
+\[
+\bigl|f_y(x,y)\bigr|=\bigl|x e^x\cos(xy)\bigr|\le x e^x\le e.
+\]
+可取 $L=e$。由上结论，当
+\[
+\frac{he}{2}<1
+\]
+即
+\[
+h<\frac{2}{e}
+\]
+关于 $s$ 收敛。
+\end{solution}
+
+
+
+
+  % 题目5
+  \item 试求出单步法$$\begin{cases}y_{n+1}=y_n+hf(x_{n+1},y_n+hf(x_n,y_n)),\\[2ex]y_0=y(x_0)\end{cases}$$的局部截断误差主项及绝对稳定性区间.
+  \begin{solution}
+考虑初值问题 $y'=f(x,y),\ y(x_0)=\mu$，假定 $y$ 充分光滑，且 $f$ 对 $y$ 的偏导连续有界。
+
+按局部截断误差的定义：
+\[
+T_{n+1}
+= y(x_{n+1})-\Bigl[y(x_n)+h\,f\!\bigl(x_{n+1},\,y(x_n)+h f(x_n,y(x_n))\bigr)\Bigr].
+\]
+由于 $y'(x)=f(x,y(x))$，故 $f(x_n,y(x_n))=y'(x_n)$，于是
+\[
+T_{n+1}=y(x_{n+1})-y(x_n)-h\,f\!\bigl(x_{n+1},\,y(x_n)+h y'(x_n)\bigr).
+\]
+对 $y(x_{n+1})$ 在 $x_n$ 处作 Taylor 展开：
+\[
+y(x_{n+1})=y(x_n)+h y'(x_n)+\frac{h^2}{2}y''(\xi_n),\qquad \xi_n\in(x_n,x_{n+1}),
+\]
+代入得
+\[
+T_{n+1}
+=h y'(x_n)+\frac{h^2}{2}y''(\xi_n)-h\,f\!\bigl(x_{n+1},\,y(x_n)+h y'(x_n)\bigr).
+\]
+再加减 $h f(x_{n+1},y(x_{n+1}))=h y'(x_{n+1})$，得
+\[
+T_{n+1}
+=-\frac{h^2}{2}y''(\tilde\xi_n)
++h\Bigl(f(x_{n+1},y(x_{n+1}))-f(x_{n+1},y(x_n)+h y'(x_n))\Bigr),\quad \tilde\xi_n\in(x_n,x_{n+1}).
+\]
+存在 $\zeta_n$ 在
+$y(x_{n+1})$ 与 $y(x_n)+h y'(x_n)$ 之间，使
+\[
+f(x_{n+1},y(x_{n+1}))-f(x_{n+1},y(x_n)+h y'(x_n))
+=f_y(x_{n+1},\zeta_n)\Bigl(y(x_{n+1})-y(x_n)-h y'(x_n)\Bigr).
+\]
+又由 Taylor 展开
+\[
+y(x_{n+1})-y(x_n)-h y'(x_n)=\frac{h^2}{2}y''(\hat\xi_n),\qquad \hat\xi_n\in(x_n,x_{n+1}),
+\]
+\[
+T_{n+1}=-\frac{h^2}{2}y''(\tilde\xi_n)+O(h^3),
+\]
+局部截断误差主项为
+\[
+T_{n+1}\sim -\frac{h^2}{2}\,y''(x_n)
+\]
+取
+\[
+y'=\lambda y,
+\]
+\[
+y_{n+1}
+= y_n+h\lambda\bigl(y_n+h\lambda y_n\bigr)
+=\Bigl(1+\lambda h+(\lambda h)^2\Bigr)y_n.
+\]
+令 $z=\lambda h$，得到稳定函数
+\[
+E(z)=1+z+z^2.
+\]
+绝对稳定性条件为
+\[
+|E(z)|=|1+z+z^2|<1. \tag{*}
+\]
+\[
+1+z+z^2=z^2+z+1>0
+\]
+因此
+\[
+z^2+z<0.
+\]
+即稳定性区间为
+\[
+z\in(-1,0).
+\]
+\end{solution}
+
+
+
+  % 题目8
+  \item 试求出中点公式$$y_{n+1} = y_n + hf\left(x_n + \frac{h}{2}, y_n + \frac{1}{2}hf(x_n, y_n)\right)$$的局部截断误差主项.
+  \begin{solution}
+假定 $y$ 是初值问题 $y'=f(x,y)$ 的充分光滑精确解，局部截断误差
+\[
+T_{n+1}
+= y(x_{n+1})-\Bigl[y(x_n)+h\,f\!\left(x_n+\frac h2,\;y(x_n)+\frac h2 f(x_n,y(x_n))\right)\Bigr].
+\]
+Taylor 展开：
+\[
+y(x_{n+1})=y_n+h y'(x_n)+\frac{h^2}{2}y''(x_n)+\frac{h^3}{6}y^{(3)}(x_n)+O(h^4).
+\]
+有
+\[
+y'(x_n)=f_n,\qquad
+y''(x_n)=\bigl(f_x+f_y f\bigr)_n,
+\]
+\[
+y^{(3)}(x_n)=\Bigl(f_{xx}+2f_{xy}f+f_{yy}f^2+f_y(f_x+f_y f)\Bigr)_n.
+\]
+对 $f$ 在点 $(x_n,y_n)$ 作二元 Taylor 展开，令
+\[
+\Delta x=\frac h2,\qquad \Delta y=\frac h2 f_n,
+\]
+则
+\[
+\begin{aligned}
+f\!\left(x_n+\frac h2,\;y_n+\frac h2 f_n\right)
+&=f_n+f_x\Delta x+f_y\Delta y
++\frac12\Bigl(f_{xx}\Delta x^2+2f_{xy}\Delta x\Delta y+f_{yy}\Delta y^2\Bigr)+O(h^3)\\
+&=f_n+\frac h2\bigl(f_x+f_y f\bigr)_n
++\frac{h^2}{8}\bigl(f_{xx}+2f_{xy}f+f_{yy}f^2\bigr)_n+O(h^3).
+\end{aligned}
+\]
+\[
+h\,f\!\left(x_n+\frac h2,\;y_n+\frac h2 f_n\right)
+= h f_n+\frac{h^2}{2}\bigl(f_x+f_y f\bigr)_n
++\frac{h^3}{8}\bigl(f_{xx}+2f_{xy}f+f_{yy}f^2\bigr)_n+O(h^4).
+\]
+\[
+T_{n+1}
+= \frac{h^3}{6}y^{(3)}(x_n)-\frac{h^3}{8}\bigl(f_{xx}+2f_{xy}f+f_{yy}f^2\bigr)_n+O(h^4).
+\]
+得局部截断误差主项为
+\[
+T_{n+1}
+=\frac{h^3}{24}\Bigl[\bigl(f_{xx}+2f_{xy}f+f_{yy}f^2\bigr)
++4f_y\bigl(f_x+f_y f\bigr)\Bigr]_{(x_n,y(x_n))}+O(h^4).
+\]
+\end{solution}
+
+
+
+  % 题目9
+  \item 对于初值问题$$\begin{cases}y'=-y+x+1,\quad x\in[0,1],\\y(0)=1,\end{cases}$$试证明用中点方法、改进的 Euler方法以及Heun方法(见第6题)来解，对任意的步长$h$均有相同的近似值.
+  \begin{solution}
+记
+\[
+f(x,y)=-y+x+1,\qquad x_{n+1}=x_n+h,\qquad y_n\approx y(x_n).
+\]
+1. 中点方法
+设
+\[
+k_1=f(x_n,y_n)=-y_n+x_n+1.
+\]
+则
+\[
+k_2=f\!\left(x_n+\frac h2,\;y_n+\frac h2k_1\right)
+= -\left(y_n+\frac h2(-y_n+x_n+1)\right)+\left(x_n+\frac h2\right)+1.
+\]
+\[
+k_2=-(1-\tfrac h2)y_n+(1-\tfrac h2)x_n+1=(1-\tfrac h2)(x_n-y_n)+1.
+\]
+得
+\[
+y_{n+1}=y_n+h k_2
+= y_n+h\Bigl[(1-\tfrac h2)(x_n-y_n)+1\Bigr]. \tag{A}
+\]
+
+2. 改进Euler方法
+
+令$
+k_2=f(x_{n+1},\,y_n+h k_1)
+= -\bigl(y_n+h(-y_n+x_n+1)\bigr)+(x_n+h)+1.
+$
+化简：
+\[
+k_2=-(1-h)y_n+(1-h)x_n+1=(1-h)(x_n-y_n)+1.
+\]
+更新为
+\[
+\begin{aligned}
+y_{n+1}
+&=y_n+\frac h2(k_1+k_2) \\
+&=y_n+\frac h2\Bigl[(x_n-y_n+1)+\bigl((1-h)(x_n-y_n)+1\bigr)\Bigr]\\
+&=y_n+h\Bigl[(1-\tfrac h2)(x_n-y_n)+1\Bigr],
+\end{aligned}
+\]
+3. Heun方法： 
+\[
+k_1=f(x_n,y_n),\qquad 
+k_2=f\!\left(x_n+\frac{2h}{3},\;y_n+\frac{2h}{3}k_1\right),
+\]
+\[
+y_{n+1}=y_n+h\left(\frac14 k_1+\frac34 k_2\right).
+\]
+结论：三种方法产生同一递推关系
+\[
+y_{n+1}=y_n+h\Bigl[(1-\tfrac h2)(x_n-y_n)+1\Bigr]
+\]
+且$y_0=1$，因此对所有 $n$ 都有三种方法给出相同的近似值。
+\end{solution}
+
+\end{enumerate}
+\end{document}
+
+%%% Local Variables:
+%%% mode: late\rvx
+%%% TeX-master: t
+%%% End:

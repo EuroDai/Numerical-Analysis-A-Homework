@@ -1,0 +1,184 @@
+% Homework template for Inference and Information
+% UPDATE: September 26, 2017 by Xiangxiang
+\documentclass[a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{ctex}
+\ctexset{
+proofname = \heiti{证明}
+}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathrsfs}
+% amsmath: equation*, amssymb: mathbb, amsthm: proof
+\usepackage{extarrows}
+\usepackage{moreenum}
+\usepackage{mathtools}
+\usepackage{url}
+\usepackage{bm}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{booktabs} % toprule
+\usepackage[mathcal]{eucal}
+\usepackage[thehwcnt = 10]{iidef} % 作业编号
+\everymath{\displaystyle}
+
+
+\thecourseinstitute{清华大学机械工程系}
+\thecoursename{数值分析A}
+\theterm{2025年秋季学期}
+\hwname{作业}
+\slname{\heiti{解}}
+\begin{document}
+\courseheader
+\name{代卓远2025210205}
+
+\begin{enumerate}
+  \setlength{\itemsep}{4\parskip}
+
+  % 题目10
+  \item 设$f(x)=\sin\frac\pi2x,x\in[-1,1]$,试在[-1,1]上用Legendre多项式作$f$的三次最佳平方逼近多项式.
+  \begin{solution}
+    用Legendre多项式作三次最佳平方逼近多项式为
+    \[s_3(x)=\frac{1}{2}a_0P_0(x)+\frac{3}{2}a_1P_1(x)+\frac{5}{2}a_2P_2(x)+\frac{7}{2}a_3P_3(x),\]
+    其中$P_0(x)=1,P_1(x)=x,P_2  (x)=\frac12(3x^2-1),P_3(x)=\frac12(5x^3-3x)$.
+    系数$a_i(i=0,1,2,3)$:
+    \[a_i=\int_{-1}^1f(x)P_i(x)dx.\]
+    计算得:
+    \begin{align*}
+      a_0&=\int_{-1}^1\sin\frac\pi2xdx=0,\\
+      a_1&=\int_{-1}^1x\sin\frac\pi2xdx=\frac{8}{\pi^2},\\
+      a_2&=\int_{-1}^1\frac12(3x^2-1)\sin\frac\pi2xdx=0,\\
+      a_3&=\int_{-1}^1\frac12(5x^3-3x)\sin\frac\pi2xdx=\frac{48(\pi^2-10)}{\pi^4}.
+    \end{align*}
+    因此,
+    \[s_3(x)=\frac{12}{\pi^2}x+\frac{84(\pi^2-10)}{\pi^4}(5x^3-3x)\]
+  \end{solution}
+
+  % 题目11
+  \item $f(x) = \ln(1+x)$的Padé逼近$R_{3,2}(x)$.
+  \begin{solution}
+    $f(x)=\ln(1+x)$的麦克劳林级数展开为
+    \[f(x)=x-\frac{x^2}{2}+\frac{x^3}{3}-\frac{x^4}{4}+\frac{x^5}{5}-\cdots.\]
+    设$R_{3,2}(x)=\frac{p_0+p_1x+p_2x^2+p_3x^3}{1+q_1x+q_2x^2}$,则有方程组
+    \[
+      \begin{cases}
+        -p_0=0,\\
+        1-p_1=0,\\
+        q_1-\frac{1}{2}-p_2=0,\\
+        q_2-\frac{1}{2}q_1+\frac{1}{3}-p_3=0,\\
+        -\frac{1}{2}q_2+\frac{1}{3}q_1-\frac{1}{4}=0,\\
+        \frac{1}{3}q_2+\frac{1}{5}=0.
+      \end{cases}
+    \]
+    解得:
+    \[p_0=0,p_1=1,p_2=-\frac{13}{20},p_3=-\frac{23}{120},q_1=-\frac{3}{20},q_2=-\frac3{5}.\]
+    因此,
+    \[R_{3,2}(x)=\frac{x-\frac{13}{20}x^2-\frac{23}{120}}{1-\frac{3}{20}x-\frac3{5}x^2}.\]
+  \end{solution}
+
+  % 题目12
+  \item 已知数据
+    \begin{align*}
+      \begin{tabular}{c|cccc}
+        \hline
+        $x_i$ & -3 & -1 & 1 & 3 \\
+        \hline
+        $y_i$ & 15 & 5 & 1 & 5 \\
+        \hline
+      \end{tabular}
+    \end{align*}
+    试用$y=ax^2+bx+c$来拟合上述数据.
+  \begin{solution}
+    法方程为
+    \[\begin{bmatrix}
+      4 & 0 & 20 \\
+      0 & 20 & 0 \\
+      20 & 0 & 164
+    \end{bmatrix}
+    \begin{bmatrix}
+      c \\ b \\ a
+    \end{bmatrix}=
+    \begin{bmatrix}
+      26 \\ -34 \\ 186
+    \end{bmatrix}.\]
+    解得:$a=\frac{7}{8},b=-\frac{17}{10},c=\frac{17}8$.
+    因此拟合多项式为
+    \[y=\frac{7}{8}x^2-\frac{17}{10}x+\frac{17}{8}.\]
+  \end{solution}
+
+  % 题目16
+  \item 给定数据
+    \begin{align*}
+      \begin{tabular}{c|cccc}
+        \hline
+        $x_{i}$ & 0.5 & 1.0 & 1.5 & 2.0 \\
+        \hline
+        $y_{i}$ & 0.4000 & 0.3333 & 0.2857 & 0.2500 \\
+        \hline
+      \end{tabular}
+    \end{align*}
+    试用线性化方法以$y=\frac{a}{x+b}$的形式拟合上述数据.
+  \begin{solution}
+    对方程线性化,得到
+    \[\frac{1}{y}=\frac{b}{a}+\frac{1}{a}x.\]
+    设$\frac{1}{y}=Y,\frac{1}{a}=A,\frac{b}{a}=B$,则有$Y=Ax+B $.
+    用最小二乘法拟合得到法方程:
+    \[\begin{bmatrix}
+      4 & 5 \\
+      5 & 7.5 \\
+    \end{bmatrix}
+    \begin{bmatrix}
+      B \\ A \\ 
+    \end{bmatrix}=
+    \begin{bmatrix}
+      11.5 \\ 15.25
+    \end{bmatrix}.\]
+    得$Y=0.7x+2$
+    即$y=\frac{1}{0.7x+2}$.
+  \end{solution}
+
+  % 题目8
+  \item 给定数据
+    \begin{align*}
+      \begin{tabular}{c|ccccc}
+        \hline
+        $x_{i}$ & -1 & $-\frac{1}{2}$ & 0 & $\frac{1}{2}$ & 1 \\
+        \hline
+        $y_{i}$ & -1 & 0 & 1 & 2 & 1 \\
+        \hline
+      \end{tabular}
+    \end{align*}
+    试用$y = a \sin \pi x + b \cos \pi x$形式来拟合上述数据.
+  \begin{solution}
+    由最小二乘法拟合得到法矩阵：
+    \[\begin{bmatrix}
+        \sum_{i=0}^4\sin^2\pi x_i & \sum_{i=0}^4\sin\pi x_i\cos\pi x_i \\
+        \sum_{i=0}^4\sin\pi x_i\cos\pi x_i & \sum_{i=0}^4\cos^2\pi x_i
+      \end{bmatrix}=
+      \begin{bmatrix}
+        2 & 0 \\
+        0 & 3
+      \end{bmatrix},\]
+    则法方程为：
+    \[\begin{bmatrix}
+        2 & 0 \\
+        0 & 3
+      \end{bmatrix}
+      \begin{bmatrix}
+        a \\ b
+      \end{bmatrix}=
+      \begin{bmatrix}
+        \sum_{i=0}^4 y_i\sin\pi x_i \\ \sum_{i=0}^4 y_i\cos\pi x_i
+      \end{bmatrix}=
+      \begin{bmatrix}
+        2 \\ 1
+      \end{bmatrix}.\]
+      解得$y=\sin \pi x+\frac{1}{3}\cos \pi x$.
+  \end{solution}
+\end{enumerate}
+\end{document}
+
+%%% Local Variables:
+%%% mode: late\rvx
+%%% TeX-master: t
+%%% End:

@@ -1,0 +1,97 @@
+% Homework template for Inference and Information
+% UPDATE: September 26, 2017 by Xiangxiang
+\documentclass[a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{ctex}
+\ctexset{
+proofname = \heiti{证明}
+}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathrsfs}
+% amsmath: equation*, amssymb: mathbb, amsthm: proof
+\usepackage{extarrows}
+\usepackage{moreenum}
+\usepackage{mathtools}
+\usepackage{url}
+\usepackage{bm}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{booktabs} % toprule
+\usepackage[mathcal]{eucal}
+\usepackage[thehwcnt = 11]{iidef} % 作业编号
+\everymath{\displaystyle}
+
+
+\thecourseinstitute{清华大学机械工程系}
+\thecoursename{数值分析A}
+\theterm{2025年秋季学期}
+\hwname{作业}
+\slname{\heiti{解}}
+\begin{document}
+\courseheader
+\name{代卓远2025210205}
+
+\begin{enumerate}
+  \setlength{\itemsep}{4\parskip}
+
+  % 题目1
+  \item 
+  \begin{solution}
+    
+  \end{solution}
+
+  % 题目2
+  \item 
+  \begin{solution}
+    
+  \end{solution}
+
+  % 题目5
+  \item 求积公式$$\int_0^1f\left(x\right)\mathrm{d}x\:\approx\:C_0f\left(0\right)\:+\:C_1f\left(1\right)\:+\:B_0f^{\prime}\left(0\right)\:,$$已知其余项表达式为$E(f)=kf^{\prime\prime\prime}(\xi),\xi\in(0,1);$试确定求积公式的系数$C_0$, $C_1$和$B_0$并求出$k.$
+  \begin{solution}
+    由余项表达式可知该求积公式的代数精度为$2$，故对$f\left(x\right)=1,x,x^2$分别求解可得
+    \[\begin{cases}
+    C_0+C_1=1\\
+    C_1+B_0=\frac{1}{2}\\
+    C_1+2B_0=\frac{1}{3}
+    \end{cases}\Rightarrow\begin{cases}
+    C_0=\frac{1}{3}\\
+    C_1=\frac{2}{3}\\
+    B_0=-\frac{1}6
+    \end{cases}\]
+    故求积公式为$\int_0^1f\left(x\right)\mathrm{d}x\approx\frac{1}{3}f\left(0\right)+\frac{2}{3}f\left(1\right)-\frac{1}{6}f^{\prime}\left(0\right).$
+    \[
+    \int_0^1 x^3\mathrm{d}x=\frac14,\quad
+    C_0f(0)+C_1f(1)+B_0f'(0)=\frac23\cdot0+\frac13\cdot1+\frac16\cdot0=\frac13
+    \]
+    误差
+    \[
+    E=\frac14-\frac13=-\frac1{12}=k\cdot 6
+    \Rightarrow\ k=-\frac1{72}.
+    \]
+  \end{solution}
+
+  % 题目7
+  \item 计算定积分$\int_1^2x\ln x$d$x$,若用复合梯形公式来计算，要使误差不超过$10^{-5}$,问区间$[1,2]$要分为多少等份; 若用复合Simpson求积公式来计算, 要达到同样的精度, 区间$[1,2]$应分为多少等份? 若用“端点修正”的复合梯形公式来计算, 要达到同样精度, 区间$[1,2]$应分为多少等份？
+  \begin{solution}
+    复合梯形公式：
+    \[|E_n|\leq\frac{(b-a)^3}{12n^2}\max_{a\leq\xi\leq b}|f^{\prime\prime}(\xi)|=\frac{1}{12n^2}\leq10^{-5}\]
+    \[n\geq\sqrt{\frac{10^5}{12}}\approx91.29\]
+    故区间$[1,2]$至少要分为$92$等份。
+    复合Simpson求积公式：
+    \[|E_n|\leq\frac{(b-a)^5}{2880n^4}\max_{a\leq\xi\leq b}|f^{(4)}(\xi)|=\frac{1}{1440n^4}\leq10^{-5}\]
+    \[n\geq\sqrt[4]{\frac{10^5}{1440}}\approx2.89\]
+    故区间$[1,2]$至少要分为$3$等份。
+    端点修正的复合梯形公式：
+    \[|E_n|\leq\frac{(b-a)^5}{720^4}\max_{a\leq\xi\leq b}|f^{(4)}(\xi)|=\frac{1}{360n^4}\leq10^{-5}\]
+    \[n\geq\sqrt[4]{\frac{10^5}{360}}\approx4.08\]
+    故区间$[1,2]$至少要分为$5$等份。
+  \end{solution}
+\end{enumerate}
+\end{document}
+
+%%% Local Variables:
+%%% mode: late\rvx
+%%% TeX-master: t
+%%% End:
