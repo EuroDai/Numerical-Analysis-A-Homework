@@ -6,6 +6,7 @@
 \usepackage{setspace}
 \onehalfspacing
 \usepackage{enumitem}
+\usepackage{graphicx}
 
 % --- 2. 字体设置 (核心修改) ---
 \usepackage{fontspec}
@@ -394,43 +395,65 @@
     \end{lstlisting}
 
     \subsection{结果及分析}
-    \begin{enumerate}
-        \item \textbf{条件数增长}：随着 $n$ 增大，$\mathrm{cond}(H_n)_1$ 呈指数级增长。例如 $n=3$ 时，$\mathrm{cond}(H_3)_1 = 748$ [cite: 949]，而当 $n=6$ 时已达到 $10^7$ 量级。
-        \item \textbf{求解误差 ($n=6$)}：
-        \begin{itemize}
-            \item LU 分解法保持了较高的精度（误差 $\sim 10^{-12}$），但在病态严重时受舍入误差影响较大 [cite: 967]。
-            \item Jacobi 迭代法在 $n=6$ 时收敛极慢甚至发散，因为 $H_n$ 虽正定但不严格对角占优 [cite: 618-620]。
-            \item CG 方法对正定矩阵有效，但受条件数影响，收敛步数增加。
-        \end{itemize}
-        \item \textbf{失效点}：当 $n \approx 13$ 时，条件数接近 $10^{18}$，超过了双精度浮点数的机器精度，导致绝对误差达到 100\%，解完全不可信。
-    \end{enumerate}
 
-\section{总结（可以有收获与建议）}
-\begin{itemize}
-    \item \textbf{病态性理解}：通过 Hilbert 矩阵实验，深刻理解了条件数 $cond(A)$ 对数值稳定性的决定性作用。当 $cond(A)$ 很大时，微小的扰动（如计算机舍入误差）会被显著放大 [cite: 922]。
-    \item \textbf{算法选择}：对于病态方程组，直接法（如 LU）通常比简单的迭代法更可靠，但仍需结合预处理技术或使用高精度计算 [cite: 953]。
-    \item \textbf{课件关联}：实验验证了课件中关于“病态方程组求解须小心进行”的论述 [cite: 952]，以及 LU 分解的存在性定理 [cite: 768]。
-\end{itemize}
-
-% 这是一个题注 (Caption) 测试
-% "Matlab Code Example" 应该是 Times New Roman
-\begin{lstlisting}[caption={Matlab Code Example (示例代码)}]
-function main()
-    % 中文注释：微软雅黑
-    % English Comment: Consolas
-    disp('Hello World');
-end
-\end{lstlisting}
-
-\subsection{Results (结果)}
-如图 \ref{fig:test} 所示（假设有图），题注中的英文也已应用新罗马字体。
+\subsubsection{条件数的变化趋势}
+如图 \ref{fig:cond} 所示，计算矩阵阶数$n$从2到16时的1-范数条件数 $\text{cond}(H_n)_1$。
 
 \begin{figure}[h]
     \centering
-    % 这里的 Rule 只是个占位符，代表图片
-    \rule{4cm}{3cm} 
-    \caption{Error Analysis Plot (误差分析图)} 
-    \label{fig:test}
+    % 【修改】直接引用生成的 PDF 文件
+    \includegraphics{1.pdf} 
+    \caption{Hilbert 矩阵条件数随阶数 $n$ 的变化 (半对数坐标)}
+    \label{fig:cond}
 \end{figure}
+在单对数坐标系下，条件数曲线呈现明显的线性增长趋势，说明Hilbert矩阵的条件数随阶数$n$呈指数级增长。
+
+当$n=13$左右时，条件数达到了$10^{18}$量级。此时矩阵的数值性质已极度不稳定，计算出的条件数出现波动，不再严格单调。
+
+\subsubsection{n=6 时的求解误差对比}
+当$n=6$时，各方法的求解结果及误差如下表所示：
+
+\begin{table}[h]
+    \centering
+    \caption{不同方法求解 $H_6 x = b_6$ 的误差对比（$n=6$）}
+    \begin{tabular}{lccl}
+        \hline
+        \textbf{方法} & \textbf{迭代次数} & \textbf{相对误差} & \textbf{状态分析} \\
+        \hline
+        LU 分解 & - & $2.2057 \times 10^{-10}$ & 有效，但精度受限 \\
+        Jacobi & 5000 & NaN & 发散\\
+        SOR ($\omega=1.0$) & 5000 & $2.5376 \times 10^{-2}$ & 收敛停滞 \\
+        SOR ($\omega=1.25$) & 5000 & $2.8683 \times 10^{-2}$ & 效果变差 \\
+        SOR ($\omega=1.5$) & 5000 & $3.2851 \times 10^{-2}$ & 效果更差 \\
+        CG (共轭梯度) & 5 & $5.4680 \times 10^{-3}$ & 假性收敛 \\
+        \hline
+    \end{tabular}
+    \label{tab:n6_error}
+\end{table}
+
+Jacobi发散，结果出现NaN，Hilbert矩阵不满足Jacobi方法收敛所需的严格对角占优条件，导致迭代过程中数值溢出。
+
+LU分解精度最高，在$n=6$时，矩阵$\mathrm{cond} \approx 10^7$较大，LU分解仍能保持约10位有效数字的精度。
+
+迭代法效果有限，SOR和共轭梯度法最终误差停留在$10^{-2}$到$10^{-3}$。
+
+\subsubsection{误差随阶数 n 的变化}
+随着$n$增大，各方法相对误差的变化曲线如图 \ref{fig:error_trend} 所示。
+
+\begin{figure}[h]
+    \centering
+    % 【修改】直接引用生成的 PDF 文件
+    \includegraphics{2.pdf} 
+    \caption{各方法相对误差随矩阵阶数 $n$ 的变化趋势}
+    \label{fig:error_trend}
+\end{figure}
+LU分解（蓝色）在$n < 10$时，误差随$n$迅速上升，从$10^{-15}$上升至$10^{-2}$）。当$n=12$时，相对误差超过100\%，计算结果已完全失去有效数字，数值求解失效。
+
+迭代法（黄色和紫色）曲线始终位于$10^{-2}$左右，精度停滞，难以继续提升。
+
+\section{总结}
+    1. 通过 Hilbert 矩阵实验，深刻理解了条件数 $\mathrm{cond}(A)$ 对数值稳定性的决定性作用。当 $\mathrm{cond}(A)$ 很大时，微小的扰动（如计算机舍入误差）会被显著放大。
+
+    2. 对于病态方程组，直接法（如LU）比简单的迭代法更可靠，但需要使用高精度计算。
 
 \end{document}
