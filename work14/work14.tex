@@ -1,0 +1,169 @@
+% Homework template for Inference and Information
+% UPDATE: September 26, 2017 by Xiangxiang
+\documentclass[a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{ctex}
+\ctexset{
+proofname = \heiti{证明}
+}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathrsfs}
+% amsmath: equation*, amssymb: mathbb, amsthm: proof
+\usepackage{extarrows}
+\usepackage{moreenum}
+\usepackage{mathtools}
+\usepackage{url}
+\usepackage{bm}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{booktabs} % toprule
+\usepackage[mathcal]{eucal}
+\usepackage[thehwcnt = 14]{iidef} % 作业编号
+\everymath{\displaystyle}
+
+
+\thecourseinstitute{清华大学机械工程系}
+\thecoursename{数值分析A}
+\theterm{2025年秋季学期}
+\hwname{作业}
+\slname{\heiti{解}}
+\begin{document}
+\courseheader
+\name{代卓远2025210205}
+
+\begin{enumerate}
+  \setlength{\itemsep}{4\parskip}
+
+  % 题目12
+  \item 试推导Hamming公式$$y_{n+3} = \frac{1}{8}(9y_{n+2} - y_{n}) + \frac{3}{8}h[f(x_{n+3}, y_{n+3}) + 2f(x_{n+2}, y_{n+2}) - f(x_{n+1}, y_{n+1})]$$的局部截断误差主项.
+  \begin{solution}
+    由$T_{n+k} = y(x_{n+k}) + \sum_{j=0}^{k-1} \alpha_j y(x_{n+j}) - h \sum_{j=0}^{k} \beta_j f(x_{n+j}, y(x_{n+j}))$得
+    \begin{align*}
+      T_{n+3} &= y(x_{n+3}) - \frac{1}{8}(9y(x_{n+2}) - y(x_{n})) - \frac{3}{8}h[f(x_{n+3}, y(x_{n+3})) + 2f(x_{n+2}, y(x_{n+2})) - f(x_{n+1}, y(x_{n+1}))].\\
+      &= y(x_{n+3}) - \frac{1}{8}(9y(x_{n+2}) - y(x_{n})) - \frac{3}{8}h[y'(x_{n+3}) + 2y'(x_{n+2}) - f'(x_{n+1})].
+    \end{align*}
+    泰勒展开得
+    \begin{align*}
+      y(x_{n+3}) &= y(x_n) + 3hy' + \frac{9}{2}h^2y'' + \frac{9}{2}h^3y''' + \frac{27}{8}h^4y^{(4)} + O(h^5) \\
+      y(x_{n+2}) &= y(x_n) + 2hy' + 2h^2y'' + \frac{4}{3}h^3y''' + \frac{2}{3}h^4y^{(4)} + O(h^5) \\
+      y'(x_{n+3}) &= y' + 3hy'' + \frac{9}{2}h^2y''' + \frac{9}{2}h^3y^{(4)} + O(h^4) \\
+      y'(x_{n+2}) &= y' + 2hy'' + 2h^2y''' + \frac{4}{3}h^3y^{(4)} + O(h^4) \\
+      y'(x_{n+1}) &= y' + hy'' + \frac{1}{2}h^2y''' + \frac{1}{6}h^3y^{(4)} + O(h^4)
+    \end{align*}
+    \begin{align*}
+    T_{n+3} &= y(x_n) \left[ 1 - \frac{1}{8}(9 - 1) \right] \\
+    &\quad + h y'(x_n) \left[ 3 - \frac{1}{8}(18) - \frac{3}{8}(1 + 2 - 1) \right] \\
+    &\quad + h^2 y''(x_n) \left[ \frac{9}{2} - \frac{1}{8}(18) - \frac{3}{8}(3 + 4 - 1) \right] \\
+    &\quad + h^3 y'''(x_n) \left[ \frac{9}{2} - \frac{1}{8}(12) - \frac{3}{8}\left(\frac{9}{2} + 4 - \frac{1}{2}\right) \right] \\
+    &\quad + h^4 y^{(4)}(x_n) \left[ \frac{27}{8} - \frac{1}{8}(6) - \frac{3}{8}\left(\frac{9}{2} + \frac{8}{3} - \frac{1}{6}\right) \right] + O(h^5) \\
+    &=O(h^5)
+    \end{align*}
+  \end{solution}
+
+  % 题目13
+  \item 试用数值积分方法直接推导二步方法$$y_{n+2}-y_{n+1}=\frac{h}{12}[5f(x_{n+2},y_{n+2})+8f(x_{n+1},y_{n+1})-f(x_{n},y_{n})].$$
+  \begin{solution}
+    由数值积分方法
+    \[
+      y(x_{n+k}) = y(x_{n+k-l}) + \int_{x_{n+k-l}}^{x_{n+k}} f(x, y(x)) \mathrm{d}x.
+    \]
+    取$k=2, l=1$，则
+    \[
+      y(x_{n+2}) = y(x_{n+1}) + \int_{x_{n+1}}^{x_{n+2}} f(x, y(x)) \mathrm{d}x.
+    \]
+    $f(x, y(x))$在$x_{n+1}, x_{n+2}$构建二次插值多项式
+    \begin{align*}
+      L_2(x)=&\sum_{i=n}^{n+2} f(x_{i}, y(x_{i})) \prod_{\substack{j=n \\ j \neq i}}^{n+2} \frac{x - x_{j}}{x_{i} - x_{j}}\\
+      =& f(x_{n}, y(x_{n})) \frac{(x - x_{n+1})(x - x_{n+2})}{(x_{n} - x_{n+1})(x_{n} - x_{n+2})} \\
+      &+ f(x_{n+1}, y(x_{n+1})) \frac{(x - x_{n})(x - x_{n+2})}{(x_{n+1} - x_{n})(x_{n+1} - x_{n+2})} \\
+      &+ f(x_{n+2}, y(x_{n+2})) \frac{(x - x_{n})(x - x_{n+1})}{(x_{n+2} - x_{n})(x_{n+2} - x_{n+1})} \\
+      =& y'(x_n)
+    \end{align*}
+    积分得
+    \begin{align*}
+      \int_{x_{n+1}}^{x_{n+2}} L_2(x) \mathrm{d}x = &h\left[\frac{1}{2} f(x_{n}, y(x_{n}))\int_1^2(t-1)(t-2)\mathrm{d}x-f(x_{n+1}, y(x_{n+1}))\int_1^2t(t-2)\mathrm{d}x \right.\\
+      &\left.+\frac{1}{2}f(x_{n+2}, y(x_{n+2}))\int_1^2t(t-1)\mathrm{d}x\right]\\
+      =&\frac{h}{12}[5f(x_{n+2},y(x_{n+2}))+8f(x_{n+1},y(x_{n+1}))-f(x_{n},y(x_{n}))].
+    \end{align*}
+    令$y_{n} = y(x_{n})$，则得
+    \[
+      y_{n+2}-y_{n+1}=\frac{h}{12}[5f(x_{n+2},y_{n+2})+8f(x_{n+1},y_{n+1})-f(x_{n},y_{n})].\]
+  \end{solution}
+
+
+
+  % 题目15
+  \item 证明线性二步法$$y_{n+2}+(b-1)y_{n+1}-by_{n}=\frac{1}{4}h[(b+3)f(x_{n+2},y_{n+2})+(3b+1)f(x_{n},y_{n})]$$当$b\neq-1$时是二阶的 ,当$b=-1$时是三阶的
+  \begin{solution}
+    由$T_{n+k} = y(x_{n+k}) + \sum_{j=0}^{k-1} \alpha_j y(x_{n+j}) - h \sum_{j=0}^{k} \beta_j f(x_{n+j}, y(x_{n+j}))$得
+    \begin{align*}
+      T_{n+2} &= y(x_{n+2}) + (b-1)y(x_{n+1}) - by(x_{n}) - \frac{1}{4}h[(b+3)f(x_{n+2},y(x_{n+2}))+(3b+1)f(x_{n},y(x_{n}))].\\
+      &= y(x_{n+2}) + (b-1)y(x_{n+1}) - by(x_{n}) - \frac{1}{4}h[(b+3)y'(x_{n+2})+(3b+1)y'(x_{n})].
+    \end{align*}
+    泰勒展开得
+    \begin{align*}
+      y(x_{n+2}) &= y(x_n) + 2hy' + 2h^2y'' + \frac{4}{3}h^3y''' + \frac{2}{3}h^4y^{(4)} + O(h^5) \\
+      y(x_{n+1}) &= y(x_n) + hy' + \frac{1}{2}h^2y'' + \frac{1}{6}h^3y''' + \frac{1}{24}h^4y^{(4)} + O(h^5) \\
+      y'(x_{n+2}) &= y' + 2hy'' + 2h^2y''' + \frac{4}{3}h^3y^{(4)} + O(h^4) \\
+      y'(x_{n}) &= y'
+    \end{align*}
+    代入得
+    \begin{align*}
+      T_{n+2} &= \left[ y(x_n) + 2hy' + 2h^2y'' + \frac{4}{3}h^3y''' + \frac{2}{3}h^4y^{(4)} \right] \\
+      &\quad + (b-1)\left[ y(x_n) + hy' + \frac{1}{2}h^2y'' + \frac{1}{6}h^3y''' + \frac{1}{24}h^4y^{(4)} \right] - b y(x_n) \\
+      &\quad - \frac{h}{4}(b+3)\left[ y' + 2hy'' + 2h^2y''' + \frac{4}{3}h^3y^{(4)} \right] - \frac{h}{4}(3b+1)y' + O(h^5) \\
+      &= -\frac{1+b}{3} h^3 y'''(x_n) - \frac{7b+9}{24} h^4 y^{(4)}(x_n) + O(h^5)
+    \end{align*}
+    当$b \neq -1$时，$T_{n+2} = O(h^3)$，为二阶方法；当$b=-1$时，$T_{n+2} = O(h^4)$，为三阶方法。
+  \end{solution}
+
+
+
+  % 题目17
+  \item 讨论线性多步法$$y_{n+3}+\frac{1}{4}y_{n+2}-\frac{1}{2}y_{n+1}-\frac{3}{4}y_{n}=\frac{1}{8}h[19f(x_{n+2},y_{n+2})+5f(x_{n},y_{n})]$$的收敛性。
+  \begin{solution}
+    第一多项式与第二多项式分别为
+    \[
+      \rho(\lambda)=\lambda^{3}+\frac{1}{4}\lambda^{2}-\frac{1}{2}\lambda-\frac{3}{4},\quad
+      \rho'(\lambda)=3\lambda^{2}+\frac{1}{2}\lambda-\frac{1}{2},\quad
+      \sigma(\lambda)=\frac{19}{8}\lambda^{2}+\frac{5}{8}.
+    \]
+    \[
+      \rho(1)=1+\frac{1}{4}-\frac{1}{2}-\frac{3}{4}=0,\quad
+      \rho'(1)=3+\frac{1}{2}-\frac{1}{2}=3,\quad
+      \sigma(1)=\frac{19}{8}+\frac{5}{8}=3.
+    \]
+    由$\rho(1)=0$且$\rho'(1)=\sigma(1)$可知该方法是相容的\\
+    计算第一多项式的零点
+    \[
+      \lambda^{3}+\frac{1}{4}\lambda^{2}-\frac{1}{2}\lambda-\frac{3}{4}=0.
+    \]
+    解得$ \lambda_1=1,\lambda_2=\frac{-5-i\sqrt{23}}{8},\lambda_3=\frac{-5+i\sqrt{23}}{8}$\\
+    其中有单重零点$\lambda=1$位于单位圆上，单重零点$\lambda_2=\frac{-5\pm i\sqrt{23}}{8}$在单位圆内，因为该方法收敛.
+  \end{solution}
+
+  % 题目20
+  \item 试证明隐式Euler方法是A-稳定的.
+  \begin{solution}
+    由隐式Euler方法
+    \[
+      y_{n+1} = y_{n} + h f(x_{n+1}, y_{n+1}).
+    \]
+    将隐式Euler方法用于试验方程得到
+    \[
+      y_{n+1} = y_{n} + h \lambda y_{n+1} \Rightarrow (1 - h \lambda) y_{n+1} = y_{n} \Rightarrow y_{n+1} = \frac{y_{n}}{1 - h \lambda}.
+    \]
+    \[
+    \left|\frac{1}{1-h\lambda}\right|<1\Rightarrow |1-h\lambda|>1\Rightarrow (1-a)^2+b^2>1.
+    \]
+    包含整个负半平面，因此隐式Euler方法是A-稳定的.
+  \end{solution}
+
+\end{enumerate}
+\end{document}
+
+%%% Local Variables:
+%%% mode: late\rvx
+%%% TeX-master: t
+%%% End:
